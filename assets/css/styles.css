@@ -1,0 +1,57 @@
+/* Reseteo básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos del Header */
+.header1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 20px 40px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  font-family: sans-serif;
+}
+
+/* Logo */
+.logo h1 {
+  font-size: 24px;
+  color: #111111;
+  letter-spacing: 1px;
+}
+
+/* Menú de navegación */
+.nav-menu ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #444444;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+  color: #d90429; /* Color al pasar el cursor */
+}
+
+/* Carrito de compras */
+.cart-icon a {
+  text-decoration: none;
+  color: #111111;
+  font-weight: 600;
+  background-color: #f1f1f1;
+  padding: 8px 15px;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.cart-icon a:hover {
+  background-color: #e2e2e2;
+}
