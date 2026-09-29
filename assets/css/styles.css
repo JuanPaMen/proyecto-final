@@ -1,4 +1,3 @@
-/* Reseteo básico */
 * {
   margin: 0;
   padding: 0;
@@ -11,7 +10,7 @@ body {
   background: #ffffff;
 }
 
-/* Estilos del Header */
+/** Estilos del Header **/
 .header1 {
   display: flex;
   justify-content: space-between;
@@ -22,14 +21,14 @@ body {
   font-family: sans-serif;
 }
 
-/* Logo */
+/** Logo **/
 .logo h1 {
   font-size: 24px;
   color: #111111;
   letter-spacing: 1px;
 }
 
-/* Menú de navegación */
+/** Menú de navegación **/
 .navegacion {
   margin: 0 auto;
   background: #ffffff99;
@@ -45,11 +44,11 @@ body {
   text-decoration: none;
   color: #444444;
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: color 0.3s;
 }
 
 .navegacion a:hover {
-  color: #d90429; /* Color al pasar el cursor */
+  color: #d90429;
   transition: all 0.3s;
 }
 
@@ -66,16 +65,23 @@ body {
   text-decoration: none;
 }
 
-/*Submenu*/
+/** Submenu **/
 
 .submenu {
   position: absolute;
+  top: 100%;
+  left: 0;
   background: #333333;
   width: 120%;
   visibility: hidden;
   opacity: 0;
-  transition: 1.5s;
+  transition: 0.7s;
+  display: flex;
   flex-direction: column;
+}
+
+.submenu li {
+  width: 100%;
 }
 
 .submenu li a {
@@ -86,12 +92,13 @@ body {
   text-decoration: none;
 }
 
+/** CORRECCIÓN IMPORTANTE **/
 .menu > li:hover .submenu {
   visibility: visible;
   opacity: 1;
 }
 
-/* Carrito de compras */
+/** Carrito de compras **/
 .cart-icon a {
   text-decoration: none;
   color: #111111;
@@ -104,4 +111,56 @@ body {
 
 .cart-icon a:hover {
   background-color: #e2e2e2;
+}
+
+/** Sección principal **/
+
+.principal {
+  width: 100%;
+  min-height: 500px;
+
+  background-image: url("../img/sueteralemaniadeportivo.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 80px;
+}
+
+.principal-contenido {
+  max-width: 450px;
+}
+
+.principal-contenido h2 {
+  font-size: 48px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.principal-contenido p {
+  font-size: 18px;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.btn-principal {
+  display: inline-block;
+
+  padding: 12px 25px;
+
+  background-color: #ffffff;
+  color: #111111;
+
+  text-decoration: none;
+  font-weight: 600;
+
+  transition: 0.3s;
+}
+
+.btn-principal:hover {
+  background-color: #d90429;
+  color: #ffffff;
 }
