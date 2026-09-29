@@ -3,6 +3,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body {
+  background: #ffffff;
 }
 
 /* Estilos del Header */
@@ -24,21 +30,65 @@
 }
 
 /* Menú de navegación */
-.nav-menu ul {
+.navegacion {
+  margin: 0 auto;
+  background: #ffffff99;
+}
+
+.navegacion ul {
   display: flex;
   list-style: none;
   gap: 30px;
 }
 
-.nav-menu a {
+.navegacion a {
   text-decoration: none;
   color: #444444;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
-.nav-menu a:hover {
+.navegacion a:hover {
   color: #d90429; /* Color al pasar el cursor */
+  transition: all 0.3s;
+}
+
+.menu > li {
+  position: relative;
+  display: inline-block;
+}
+
+.menu > li > a {
+  display: block;
+  padding: 15px 20px;
+  color: #353535;
+  font-family: "Open sans";
+  text-decoration: none;
+}
+
+/*Submenu*/
+
+.submenu {
+  position: absolute;
+  background: #333333;
+  width: 120%;
+  visibility: hidden;
+  opacity: 0;
+  transition: 1.5s;
+  flex-direction: column;
+}
+
+.submenu li a {
+  display: block;
+  padding: 15px;
+  color: #fff;
+  font-family: "Open sans";
+  text-decoration: none;
+}
+
+.menu > li:hover .submenu {
+  visibility: visible;
+  opacity: 1;
 }
 
 /* Carrito de compras */
