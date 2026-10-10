@@ -8,28 +8,45 @@
   </head>
   <body>
     <header class="header1">
-      <div class="logo"><h1>It's Peak</h1></div>
-      <nav class="navegacion">
+      <div class="logo">
+        <h1>It's Peak</h1>
+      </div>
+
+      <nav class="navegacion" id="navegacion">
         <ul class="menu">
           <li><a href="#">Inicio</a></li>
-          <li>
-            <a href="#">Hombre</a>
-            <ul class="submenu">
-              <li><a href="#">Ropa</a></li>
-              <li><a href="#">Jeans</a></li>
-              <li><a href="#">Camisetas</a></li>
-              <li><a href="#">Deportiva</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Mujer</a></li>
+          <li><a href="#">Camisetas</a></li>
+          <li><a href="#">Polos</a></li>
+          <li><a href="#">Camisas</a></li>
+          <li><a href="#">Jeans</a></li>
+          <li><a href="#">Bermudas</a></li>
           <li><a href="#">Ofertas</a></li>
-          <li><a href="#">Nosotros</a></li>
         </ul>
       </nav>
+
       <div class="cart-icon">
         <a href="#">🛒 Carrito (0)</a>
       </div>
+
+      <button class="menu-hamburguesa" id="menu-hamburguesa">
+        <svg
+          class="abrir"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-list"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+          />
+        </svg>
+        <span class="cerrar">X</span>
+      </button>
     </header>
+    <hr />
     <main>
       <section class="principal">
         <div class="principal-contenido">
@@ -39,5 +56,7 @@
         </div>
       </section>
     </main>
+    <section class="productos"></section>
+    <script src="js/index.js"></script>
   </body>
 </html>
