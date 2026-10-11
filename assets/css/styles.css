@@ -7,8 +7,11 @@
   --rojo: #d90429;
   --fondo-header: #060606e4;
   --fondo-menu: #090909;
-  --fondo-submenu: #333333;
-  --texto-submenu: #f4f3f3;
+  --fondo-del-body: rgb(247 244 239);
+  --sanserif: "sans-serif";
+  --timesnwrm: "Times New Roman";
+  --arial: "Arial";
+  --fuente: sans-serif, "Times New Roman", Arial;
 }
 
 * {
@@ -20,7 +23,7 @@
 }
 
 body {
-  background: var(--blanco);
+  background: var(--fondo-del-body);
 }
 
 /*** Estilos del Header ***/
@@ -143,38 +146,32 @@ hr {
   height: 2px;
 }
 
-/*** Submenú ***/
-.submenu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: var(--fondo-submenu);
-  width: 120%;
-  visibility: hidden;
-  opacity: 0;
-  transition: 0.7s;
-  display: flex;
-  flex-direction: column;
+/*Administador*/
+.admin {
+  margin-left: 15px;
 }
 
-.submenu li {
-  width: 100%;
-}
-
-.submenu li a {
-  display: block;
-  padding: 15px;
-  color: var(--texto-submenu);
-  font-family: "Open Sans", sans-serif;
+.admin a {
+  display: inline-block;
   text-decoration: none;
+  color: var(--azul-claro);
+  font-weight: 600;
+  padding: 8px 15px;
+  border: 1px solid var(--azul);
+  border-radius: 20px;
+  transition: 1s;
 }
 
-.menu > li:hover .submenu {
-  visibility: visible;
-  opacity: 1;
+.admin a:hover {
+  background-color: var(--azul);
+  color: var(--blanco);
 }
 
-/*** Carrito de compras ***/
+/* Carrito de compras */
+.cart-icon {
+  margin-left: auto;
+}
+
 .cart-icon a {
   display: inline-block;
   text-decoration: none;
@@ -195,14 +192,16 @@ hr {
 
 /*** Sección principal ***/
 .principal {
-  width: 100%;
+  width: 90%;
+  max-width: 1200px;
   min-height: 500px;
-
-  background-image: url("../img/sueteralemaniadeportivo.jpg");
+  margin: 30px auto;
+  background-image: url(/assets/img/sueteralemaniadeportivo.jp);
+  min-height: 200px;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-
+  background-repeat: repeat;
+  background-color: red;
   display: flex;
   align-items: center;
 
@@ -223,6 +222,8 @@ hr {
   font-size: 18px;
   color: var(--blanco);
   margin-bottom: 20px;
+  font-family: sans-serif;
+  font-weight: 700;
 }
 
 .btn-principal {
@@ -233,11 +234,120 @@ hr {
   text-decoration: none;
   font-weight: 600;
   transition: 0.3s;
+  font-family: "Arial";
 }
 
 .btn-principal:hover {
   background-color: var(--rojo);
   color: var(--blanco);
+}
+
+/*Seccion de productos*/
+.productos {
+  width: 90%;
+  max-width: 1200px;
+  margin: 60px auto;
+}
+
+.productos h2 {
+  font-size: 30px;
+  color: var(--negro);
+  margin-bottom: 10px;
+}
+
+.productos > p {
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 30px;
+}
+
+/*Contenedor de los productos*/
+.contenedor-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+/*Tarjetas o Cards de los productos*/
+.producto {
+  background-color: var(--blanco);
+  border: 1px solid #eeeeee;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: 1s;
+  display: flex;
+  flex-direction: column;
+}
+
+.producto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.producto img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+  transition: 0.5s;
+}
+
+.producto:hover img {
+  transform: scale(1.03);
+}
+
+/*Informacion del producto*/
+.producto-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.producto-info:hover h3 {
+  color: var(--rojo);
+}
+
+.producto-info h3 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--negro);
+  margin-bottom: 10px;
+  transition: 0, 8s;
+}
+
+.precio {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--negro);
+  margin-bottom: 15px;
+}
+
+#sin-productos {
+  display: none;
+  margin-top: 20px;
+  color: #fdf9f9;
+  font-size: 17px;
+}
+
+/*Boton de agregar al carrito*/
+.btn-carrito {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--azul);
+  color: var(--blanco);
+  border: none;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0, 9s;
+  margin-top: auto;
+}
+
+.btn-carrito:hover {
+  background-color: var(--rojo);
 }
 
 /*** Responsive ***/
@@ -308,7 +418,6 @@ hr {
   /** Carrito **/
   .cart-icon {
     text-align: center;
-    margin-left: auto;
   }
 
   .cart-icon a {
@@ -318,6 +427,15 @@ hr {
 
   /** Sección principal **/
   .principal {
-    padding: 40px 30px;
+    width: 95%;
+    min-height: 400px;
+    margin: 20px auto;
+    padding: 30px 20px;
   }
+}
+
+/*admin*/
+.admin a {
+  font-size: 12px;
+  padding: 10px 10px;
 }
