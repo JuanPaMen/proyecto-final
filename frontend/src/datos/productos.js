@@ -30,4 +30,22 @@ const Productos = [
     categoria: "jeans",
     oferta: false,
   },
+  {
+    id: 4,
+    nombre: "Bermuda Casual",
+    precio: 75000,
+    imagen: gorra,
+    categoria: "bermudas",
+    oferta: false,
+  },
+  {
+    id: 5,
+    nombre: "Gorra New Era Floral",
+    precio: 45000,
+    imagen: gorra,
+    categoria: "gorras",
+    oferta: false,
+  },
 ];
+
+export default Productos;
