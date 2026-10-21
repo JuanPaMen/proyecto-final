@@ -7,23 +7,23 @@
   --rojo: #d90429;
   --fondo-header: #060606e4;
   --fondo-menu: #090909;
-  --fondo-del-body: rgb(247 244 239);
-  --sanserif: "sans-serif";
-  --timesnwrm: "Times New Roman";
-  --arial: "Arial";
-  --fuente: sans-serif, "Times New Roman", Arial;
+  --fondo-del-body: rgb(247, 244, 239);
+  --fuente-principal: sans-serif, "Times New Roman", Arial;
 }
 
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
 }
 
 body {
   background: var(--fondo-del-body);
+  font-family: var(--fuente-principal);
+  color: var(--negro);
+  line-height: 1.5;
 }
 
 /*** Estilos del Header ***/
@@ -34,7 +34,6 @@ body {
   background-color: var(--fondo-header);
   padding: 20px 40px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  font-family: sans-serif;
   position: relative;
   flex-wrap: wrap;
 }
@@ -60,17 +59,6 @@ body {
   justify-content: center;
 }
 
-.navegacion a {
-  text-decoration: none;
-  color: var(--blanco);
-  font-weight: 500;
-  transition: 0.3s;
-}
-
-.navegacion a:hover {
-  color: var(--rojo);
-}
-
 .menu > li {
   position: relative;
   display: inline-block;
@@ -84,7 +72,7 @@ body {
   text-decoration: none;
   border: 1px solid transparent;
   border-radius: 30px;
-  transition: 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .menu > li > a:hover {
@@ -102,7 +90,6 @@ body {
   flex-shrink: 0;
   background: none;
   border: none;
-  font-size: 28px;
   cursor: pointer;
 }
 
@@ -146,7 +133,7 @@ hr {
   height: 2px;
 }
 
-/*Administador*/
+/* Administrador */
 .admin {
   margin-left: 15px;
 }
@@ -155,11 +142,12 @@ hr {
   display: inline-block;
   text-decoration: none;
   color: var(--azul-claro);
+  font-size: 12px;
   font-weight: 600;
-  padding: 8px 15px;
+  padding: 8px 12px;
   border: 1px solid var(--azul);
   border-radius: 20px;
-  transition: 1s;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .admin a:hover {
@@ -182,7 +170,7 @@ hr {
   border: 1px solid var(--blanco);
   border-radius: 20px;
   white-space: nowrap;
-  transition: 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .cart-icon a:hover {
@@ -190,22 +178,21 @@ hr {
   color: var(--negro);
 }
 
-/*** Sección principal ***/
+/*** Sección principal (Hero) ***/
 .principal {
   width: 90%;
   max-width: 1200px;
-  min-height: 500px;
+  min-height: 400px;
   margin: 30px auto;
-  background-image: url(/assets/img/sueteralemaniadeportivo.jp);
-  min-height: 200px;
   background-size: cover;
   background-position: center;
-  background-repeat: repeat;
-  background-color: red;
+  background-repeat: no-repeat;
+  background-color: var(--rojo);
+  border-radius: 12px;
   display: flex;
   align-items: center;
-
-  padding: 0 80px;
+  padding: 0 60px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .principal-contenido {
@@ -216,13 +203,13 @@ hr {
   font-size: 48px;
   color: var(--azul-claro);
   margin-bottom: 10px;
+  line-height: 1.1;
 }
 
 .principal-contenido p {
   font-size: 18px;
   color: var(--blanco);
   margin-bottom: 20px;
-  font-family: sans-serif;
   font-weight: 700;
 }
 
@@ -233,16 +220,17 @@ hr {
   color: var(--negro);
   text-decoration: none;
   font-weight: 600;
-  transition: 0.3s;
-  font-family: "Arial";
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn-principal:hover {
-  background-color: var(--rojo);
+  background-color: var(--negro);
   color: var(--blanco);
 }
 
-/*Seccion de productos*/
+/* Sección de productos */
 .productos {
   width: 90%;
   max-width: 1200px;
@@ -252,7 +240,7 @@ hr {
 .productos h2 {
   font-size: 30px;
   color: var(--negro);
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .productos > p {
@@ -261,43 +249,43 @@ hr {
   margin-bottom: 30px;
 }
 
-/*Contenedor de los productos*/
+/* Contenedor de los productos */
 .contenedor-productos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 25px;
 }
 
-/*Tarjetas o Cards de los productos*/
+/* Tarjetas o Cards de los productos */
 .producto {
   background-color: var(--blanco);
   border: 1px solid #eeeeee;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: 0.3s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
 }
 
 .producto:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .producto img {
   width: 100%;
-  height: 300px;
+  height: 280px;
   object-fit: cover;
   display: block;
-  transition: 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .producto:hover img {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
-/*Informacion del producto*/
+/* Información del producto */
 .producto-info {
   padding: 20px;
   display: flex;
@@ -305,20 +293,20 @@ hr {
   flex: 1;
 }
 
-.producto-info:hover h3 {
-  color: var(--rojo);
-}
-
 .producto-info h3 {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--negro);
   margin-bottom: 10px;
-  transition: 0, 8s;
+  transition: color 0.3s ease;
+}
+
+.producto:hover .producto-info h3 {
+  color: var(--azul);
 }
 
 .precio {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 700;
   color: var(--negro);
   margin-bottom: 15px;
@@ -327,22 +315,23 @@ hr {
 #sin-productos {
   display: none;
   margin-top: 20px;
-  color: #fdf9f9;
+  color: #666;
   font-size: 17px;
+  text-align: center;
 }
 
-/*Boton de agregar al carrito*/
+/* Botón de agregar al carrito */
 .btn-carrito {
   width: 100%;
   padding: 12px;
   background-color: var(--azul);
   color: var(--blanco);
   border: none;
-  border-radius: 15px;
+  border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0, 9s;
+  transition: background-color 0.3s ease;
   margin-top: auto;
 }
 
@@ -350,26 +339,25 @@ hr {
   background-color: var(--rojo);
 }
 
-/*** Responsive ***/
+/*** Responsive (Dispositivos móviles) ***/
 @media (max-width: 1000px) {
   .header1 {
-    padding: 20px 15px;
+    padding: 15px 20px;
   }
 
   /** Menú hamburguesa **/
   .menu-hamburguesa {
     display: block;
-    margin-left: 12px;
+    margin-left: 10px;
   }
 
-  /** Botón de cerrar **/
+  /** Botón de cerrar fijo **/
   .menu-hamburguesa.abierto {
     position: fixed;
     top: 20px;
-    right: 15px;
+    right: 20px;
     margin-left: 0;
     z-index: 1001;
-    color: var(--azul-claro);
   }
 
   /** Navegación a pantalla completa **/
@@ -378,11 +366,11 @@ hr {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     height: 100dvh;
     margin: 0;
-    padding: 80px 20px 30px;
+    padding: 90px 20px 30px;
     background: var(--fondo-menu);
     overflow-y: auto;
     z-index: 1000;
@@ -390,14 +378,15 @@ hr {
 
   .navegacion.activo {
     display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .navegacion .menu {
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     width: 100%;
-    margin: auto;
   }
 
   .menu > li {
@@ -410,32 +399,26 @@ hr {
     padding: 12px 20px;
   }
 
-  /** Evita mover la página mientras el menú está abierto **/
+  /** Bloquear scroll del body con el menú abierto **/
   body.menu-abierto {
     overflow: hidden;
   }
 
-  /** Carrito **/
-  .cart-icon {
-    text-align: center;
-  }
-
+  /** Carrito en mobile **/
   .cart-icon a {
-    font-size: 14px;
-    padding: 8px 10px;
+    font-size: 13px;
+    padding: 6px 12px;
   }
 
-  /** Sección principal **/
+  /** Sección principal en mobile **/
   .principal {
     width: 95%;
-    min-height: 400px;
+    min-height: 350px;
     margin: 20px auto;
     padding: 30px 20px;
   }
-}
 
-/*admin*/
-.admin a {
-  font-size: 12px;
-  padding: 10px 10px;
+  .principal-contenido h2 {
+    font-size: 36px;
+  }
 }
