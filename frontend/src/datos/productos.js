@@ -34,7 +34,7 @@ const Productos = [
     id: 4,
     nombre: "Bermuda Casual",
     precio: 75000,
-    imagen: gorra,
+    imagen: bermuda,
     categoria: "bermudas",
     oferta: false,
   },

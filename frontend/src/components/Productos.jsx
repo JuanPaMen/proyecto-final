@@ -1,7 +1,11 @@
+import { useState, useEffect } from "react";
 import Producto from "./Producto.jsx";
-import productos from "../datos/productos.js";
 
 function Productos({ categoria = "todos" }) {
+  const [productos, setProductos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState("");
+
   const nombres = {
     todos: "Nuestros Productos",
     camisetas: "Camisetas",
@@ -12,6 +16,29 @@ function Productos({ categoria = "todos" }) {
     gorras: "Gorras",
     ofertas: "Ofertas",
   };
+
+  /*Obtener productos del backend*/
+  useEffect(() => {
+    async function obtenerProductos() {
+      try {
+        const respuesta = await fetch("http://localhost:3000/api/productos");
+
+        if (!respuesta.ok) {
+          throw new Error("Error al consultar los productos");
+        }
+
+        const datos = await respuesta.json();
+        setProductos(datos);
+      } catch (error) {
+        console.log(error);
+        setError("No se pudieron cargar los productos");
+      } finally {
+        setCargando(false);
+      }
+    }
+
+    obtenerProductos();
+  }, []);
 
   const productosFiltrados = productos.filter(function (producto) {
     if (categoria === "todos") {
@@ -25,6 +52,22 @@ function Productos({ categoria = "todos" }) {
     return producto.categoria === categoria;
   });
 
+  if (cargando) {
+    return (
+      <section className="productos">
+        <p>Cargando productos...</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="productos">
+        <p>{error}</p>
+      </section>
+    );
+  }
+
   return (
     <section className="productos" id="productos">
       <h2>{nombres[categoria] || "Categoria no encontrada"}</h2>
@@ -33,10 +76,10 @@ function Productos({ categoria = "todos" }) {
       <div className="contenedor-productos">
         {productosFiltrados.map((producto) => (
           <Producto
-            key={producto.id}
+            key={producto._id}
             nombre={producto.nombre}
             precio={producto.precio}
-            imagen={producto.imagen}
+            imagen={`${import.meta.env.BASE_URL}assets/img/${producto.imagen}`}
           />
         ))}
       </div>
