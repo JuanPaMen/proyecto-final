@@ -4,6 +4,7 @@ import Hero from "./components/Hero.jsx";
 import Productos from "./components/Productos.jsx";
 import Categoria from "./Paginas/categoria.jsx";
 
+
 function App() {
   return (
     <>
