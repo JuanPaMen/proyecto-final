@@ -1,30 +1,32 @@
-// index.js
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
-const connectDB = require('./src/config/db');
-const seedDB = require('./src/config/seed'); // Importar el seed
+const connectDB = require("./src/config/db");
+const productRoutes = require("./src/routes/product.routes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Conectar a la base de datos y luego poblar los productos
-connectDB().then(async () => {
-    await seedDB();
-});
-
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-const productRoutes = require('./src/routes/product.routes');
-
-app.get('/', (req, res) => {
-    res.send('¡Hola desde mi propio backend organizado, con CORS y Base de Datos!');
+// Ruta principal
+app.get("/", (req, res) => {
+  res.send("Backend de It's Peak funcionando");
 });
 
-app.use('/api', productRoutes);
+// Rutas de productos
+app.use("/api", productRoutes);
 
-app.listen(PORT, () => {
+// Iniciar el servidor
+const iniciarServidor = async () => {
+  await connectDB();
+
+  app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+  });
+};
+
+iniciarServidor();

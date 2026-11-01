@@ -1,14 +1,10 @@
 import { useParams } from "react-router";
+import Productos from "../components/Productos.jsx";
 
 function Categoria() {
   const { categoria } = useParams();
 
-  return (
-    <section className="productos">
-      <h2>{categoria}</h2>
-      <p>Aqui encontrarás nuestros productos de esta categoria</p>
-    </section>
-  );
+  return <Productos categoria={categoria} />;
 }
 
 export default Categoria;

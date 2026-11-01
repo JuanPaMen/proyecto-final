@@ -4,6 +4,31 @@ import { Link } from "react-router";
 function Header() {
   const [abierto, setAbierto] = useState(false);
 
+  const [cantidadCarrito, setCantidadCarrito] = useState(0);
+
+  useEffect(() => {
+    const actualizarCarrito = () => {
+      const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
+
+      const total = carrito.reduce(
+        (suma, producto) => suma + (producto.cantidad || 1),
+        0,
+      );
+
+      setCantidadCarrito(total);
+    };
+
+    actualizarCarrito();
+
+    window.addEventListener("carritoActualizado", actualizarCarrito);
+    window.addEventListener("storage", actualizarCarrito);
+
+    return () => {
+      window.removeEventListener("carritoActualizado", actualizarCarrito);
+      window.removeEventListener("storage", actualizarCarrito);
+    };
+  }, []);
+
   useEffect(() => {
     document.body.classList.toggle("menu-abierto", abierto);
 
@@ -52,11 +77,10 @@ function Header() {
       </nav>
 
       <div className="cart-icon">
-        <a href="#">
-          <i className="bi bi-cart3"></i> Carrito (0)
-        </a>
+        <Link to="/carrito">
+          <i className="bi bi-cart3"></i> Carrito ({cantidadCarrito})
+        </Link>
       </div>
-
       <div className="admin">
         <a href="#">admin</a>
       </div>

@@ -1,15 +1,23 @@
-// src/routes/product.routes.js
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { getProducts, createProduct, deleteProduct } = require('../controllers/product.controller');
 
-// Ruta GET para obtener productos
-router.get('/productos', getProducts);
+const {
+  getProducts,
+  getProductById,
+  createProduct,
+  deleteProduct,
+} = require("../controllers/product.controller");
 
-// Ruta POST para agregar un producto nuevo
-router.post('/productos', createProduct);
+// Obtener todos los productos
+router.get("/productos", getProducts);
 
-// Ruta DELETE para eliminar un producto por su _id de MongoDB
-router.delete('/productos/:id', deleteProduct);
+// Obtener un producto por su ID
+router.get("/productos/:id", getProductById);
+
+// Agregar un producto
+router.post("/productos", createProduct);
+
+// Eliminar un producto
+router.delete("/productos/:id", deleteProduct);
 
 module.exports = router;
