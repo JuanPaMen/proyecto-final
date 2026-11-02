@@ -1,7 +1,6 @@
-// src/controllers/product.controller.js
 const Product = require("../models/product.model");
 
-// Obtener todos los productos desde MongoDB
+// 1. Obtener todos los productos
 const getProducts = async (req, res) => {
   try {
     const productos = await Product.find();
@@ -9,58 +8,11 @@ const getProducts = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       mensaje: "Error al obtener los productos",
-      error: error.message,
     });
   }
 };
 
-// Crear un nuevo producto en MongoDB
-const createProduct = async (req, res) => {
-  try {
-    const { id, nombre, precio, categoria, imagen } = req.body;
-
-    // Crear una nueva instancia del modelo Product
-    const nuevoProducto = new Product({
-      id,
-      nombre,
-      precio,
-      categoria,
-      imagen,
-    });
-
-    // Guardar en la base de datos
-    const productoGuardado = await nuevoProducto.save();
-    res.status(201).json(productoGuardado);
-  } catch (error) {
-    res
-      .status(400)
-      .json({ mensaje: "Error al crear el producto", error: error.message });
-  }
-};
-
-module.exports = {
-  getProducts,
-  createProduct,
-};
-
-// Eliminar un producto en MongoDB
-const deleteProduct = async (req, res) => {
-  try {
-    const { id } = req.params; // Recibimos el _id de MongoDB por la URL
-    const productoEliminado = await Product.findByIdAndDelete(id);
-
-    if (!productoEliminado) {
-      return res.status(404).json({ mensaje: "Producto no encontrado" });
-    }
-
-    res.json({ mensaje: "Producto eliminado exitosamente", productoEliminado });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ mensaje: "Error al eliminar el producto", error: error.message });
-  }
-};
-
+// 2. Obtener un producto individual
 const getProductById = async (req, res) => {
   try {
     const producto = await Product.findById(req.params.id);
@@ -79,10 +31,110 @@ const getProductById = async (req, res) => {
   }
 };
 
-// No olvides exportarlo junto con los demás
+// 3. Agregar un producto
+const createProduct = async (req, res) => {
+  try {
+    const { id, nombre, precio, categoria, imagen, descripcion, tallas } =
+      req.body;
+
+    const nuevoProducto = new Product({
+      id,
+      nombre,
+      precio,
+      categoria,
+      imagen,
+      descripcion,
+      tallas,
+    });
+
+    const productoGuardado = await nuevoProducto.save();
+
+    res.status(201).json(productoGuardado);
+  } catch (error) {
+    res.status(400).json({
+      mensaje: "Error al crear el producto",
+      error: error.message,
+    });
+  }
+};
+
+// 4. Editar un producto
+const updateProduct = async (req, res) => {
+  try {
+    const camposPermitidos = [
+      "nombre",
+      "precio",
+      "categoria",
+      "imagen",
+      "descripcion",
+      "tallas",
+    ];
+
+    const cambios = {};
+
+    camposPermitidos.forEach((campo) => {
+      if (Object.prototype.hasOwnProperty.call(req.body || {}, campo)) {
+        cambios[campo] = req.body[campo];
+      }
+    });
+
+    if (Object.keys(cambios).length === 0) {
+      return res.status(400).json({
+        mensaje: "No se enviaron campos para actualizar",
+      });
+    }
+
+    const productoActualizado = await Product.findByIdAndUpdate(
+      req.params.id,
+      { $set: cambios },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    if (!productoActualizado) {
+      return res.status(404).json({
+        mensaje: "Producto no encontrado",
+      });
+    }
+
+    res.json(productoActualizado);
+  } catch (error) {
+    res.status(400).json({
+      mensaje: "Error al actualizar el producto",
+      error: error.message,
+    });
+  }
+};
+
+// 5. Eliminar un producto
+const deleteProduct = async (req, res) => {
+  try {
+    const productoEliminado = await Product.findByIdAndDelete(req.params.id);
+
+    if (!productoEliminado) {
+      return res.status(404).json({
+        mensaje: "Producto no encontrado",
+      });
+    }
+
+    res.json({
+      mensaje: "Producto eliminado correctamente",
+      productoEliminado,
+    });
+  } catch (error) {
+    res.status(400).json({
+      mensaje: "Error al eliminar el producto",
+    });
+  }
+};
+
+// Exportar las funciones
 module.exports = {
   getProducts,
-  createProduct,
-  deleteProduct,
   getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
 };

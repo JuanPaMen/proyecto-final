@@ -5,6 +5,7 @@ const {
   getProducts,
   getProductById,
   createProduct,
+  updateProduct,
   deleteProduct,
 } = require("../controllers/product.controller");
 
@@ -14,8 +15,9 @@ const protegerAdmin = require("../middlewares/auth.middleware");
 router.get("/productos", getProducts);
 router.get("/productos/:id", getProductById);
 
-// Rutas protegidas: solo administradores
+// Rutas protegidas
 router.post("/productos", protegerAdmin, createProduct);
+router.put("/productos/:id", protegerAdmin, updateProduct);
 router.delete("/productos/:id", protegerAdmin, deleteProduct);
 
 module.exports = router;
