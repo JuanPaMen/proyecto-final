@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const connectDB = require("./src/config/db");
 const productRoutes = require("./src/routes/product.routes");
+const authRoutes = require("./src/routes/auth.routes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +20,9 @@ app.get("/", (req, res) => {
 
 // Rutas de productos
 app.use("/api", productRoutes);
+
+//ruta de autenticacion,admins
+app.use("/api/auth", authRoutes);
 
 // Iniciar el servidor
 const iniciarServidor = async () => {

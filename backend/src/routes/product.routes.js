@@ -8,16 +8,14 @@ const {
   deleteProduct,
 } = require("../controllers/product.controller");
 
-// Obtener todos los productos
-router.get("/productos", getProducts);
+const protegerAdmin = require("../middlewares/auth.middleware");
 
-// Obtener un producto por su ID
+// Rutas públicas
+router.get("/productos", getProducts);
 router.get("/productos/:id", getProductById);
 
-// Agregar un producto
-router.post("/productos", createProduct);
-
-// Eliminar un producto
-router.delete("/productos/:id", deleteProduct);
+// Rutas protegidas: solo administradores
+router.post("/productos", protegerAdmin, createProduct);
+router.delete("/productos/:id", protegerAdmin, deleteProduct);
 
 module.exports = router;

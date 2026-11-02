@@ -5,6 +5,7 @@ import Productos from "./components/Productos.jsx";
 import Categoria from "./Paginas/Categoria.jsx";
 import DetalleProducto from "./Paginas/DetalleProducto.jsx";
 import Carrito from "./Paginas/Carrito.jsx";
+import AdminLogin from "./Paginas/AdminLogin.jsx";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/:categoria" element={<Categoria />} />
           <Route path="/producto/:id" element={<DetalleProducto />} />
           <Route path="/carrito" element={<Carrito />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
         </Routes>
       </main>
     </>
