@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 function AdminLogin() {
+  const navigate = useNavigate();
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [mostrarPassword, setMostrarPassword] = useState(false);
@@ -38,6 +39,7 @@ function AdminLogin() {
 
       setPassword("");
       setAutenticado(true);
+      navigate("/admin", { replace: true });
     } catch (error) {
       setError(error.message);
     } finally {

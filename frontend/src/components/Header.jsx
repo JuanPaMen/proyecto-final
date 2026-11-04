@@ -82,7 +82,7 @@ function Header() {
         </Link>
       </div>
       <div className="admin">
-        <Link to="/admin/login">admin</Link>
+        <Link to="/admin">admin</Link>
       </div>
 
       <button

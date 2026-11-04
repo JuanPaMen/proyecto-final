@@ -88,7 +88,7 @@ const updateProduct = async (req, res) => {
       req.params.id,
       { $set: cambios },
       {
-        new: true,
+        returnDocument: "after",
         runValidators: true,
       },
     );
