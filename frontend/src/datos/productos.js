@@ -3,7 +3,6 @@ import polo from "../assets/img/camiseta.webp";
 import jean from "../assets/img/pantalon-jean.webp";
 import bermuda from "../assets/img/bermuda-jean.webp";
 import gorra from "../assets/img/gorra-new-era-floral.webp";
-import Categoria from "../Paginas/categoria";
 
 const Productos = [
   {
