@@ -1,6 +1,4 @@
-// ==========================================
-// 1. MENÚ HAMBURGUESA
-// ==========================================
+// MENÚ HAMBURGUESA
 const menu = document.getElementById("menu-hamburguesa");
 const navegacion = document.getElementById("navegacion");
 
@@ -12,9 +10,7 @@ if (menu && navegacion) {
     });
 }
 
-// ==========================================
-// 2. FILTROS DE CATEGORÍAS
-// ==========================================
+// FILTROS DE CATEGORÍAS
 const configurarFiltros = () => {
     const categorias = document.querySelectorAll(".menu a");
     const aviso = document.getElementById("sin-productos");
@@ -51,9 +47,7 @@ const configurarFiltros = () => {
     });
 };
 
-// ==========================================
-// 3. SISTEMA DE CARRITO DE COMPRAS
-// ==========================================
+// SISTEMA DE CARRITO DE COMPRAS
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
 const actualizarContadorCarrito = () => {
@@ -85,9 +79,7 @@ const inicializarEventosCarrito = () => {
     });
 };
 
-// ==========================================
-// 4. PINTAR PRODUCTOS DESDE EL BACKEND
-// ==========================================
+// PINTAR PRODUCTOS DESDE EL BACKEND
 const mostrarProductosEnPantalla = (productosArray) => {
     const contenedor = document.querySelector('.contenedor-productos');
     
@@ -111,15 +103,12 @@ const mostrarProductosEnPantalla = (productosArray) => {
 
         contenedor.appendChild(productoDiv);
     });
-
-    // Activamos filtros, eventos del carrito para los elementos renderizados
+    
     configurarFiltros();
     inicializarEventosCarrito();
 };
 
-// ==========================================
-// 5. CARGAR PRODUCTOS DESDE LA API (BACKEND)
-// ==========================================
+// CARGAR PRODUCTOS DESDE LA API
 const cargarProductos = async () => {
     try {
         const respuesta = await fetch('http://localhost:3000/api/productos');
@@ -132,9 +121,8 @@ const cargarProductos = async () => {
     }
 };
 
-// ==========================================
-// 6. INICIALIZACIÓN GLOBAL AL CARGAR LA PÁGINA
-// ==========================================
+
+// INICIALIZACIÓN GLOBAL AL CARGAR LA PÁGINA
 document.addEventListener('DOMContentLoaded', () => {
     actualizarContadorCarrito();
     cargarProductos();
