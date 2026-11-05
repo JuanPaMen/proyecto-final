@@ -1,14 +1,16 @@
 import { Link } from "react-router";
 
-function Producto({ id, nombre, precio, imagen }) {
+function Producto({ id, nombre, precio, imagen, oferta }) {
   return (
     <div className="producto">
       {/* Imagen que lleva al detalle */}
       <Link to={`/producto/${id}`}>
-        <img src={imagen} alt={nombre} />
+        <img src={imagen} alt={nombre} loading="lazy" />
       </Link>
 
       <div className="producto-info">
+        {oferta && <span className="etiqueta-oferta">Oferta</span>}
+
         {/* Nombre que lleva al detalle */}
         <Link
           to={`/producto/${id}`}
@@ -22,7 +24,10 @@ function Producto({ id, nombre, precio, imagen }) {
 
         <p className="precio">${precio.toLocaleString("es-CO")}</p>
 
-        <button className="btn-carrito">Agregar al carrito</button>
+        {/* La talla se elige en el detalle, por eso el botón lleva allá */}
+        <Link to={`/producto/${id}`} className="btn-carrito btn-enlace">
+          Elegir talla
+        </Link>
       </div>
     </div>
   );

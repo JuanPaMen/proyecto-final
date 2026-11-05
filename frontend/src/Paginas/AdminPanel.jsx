@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import FormularioProducto from "../components/FormularioProducto.jsx";
 import EditarProducto from "../components/EditarProducto.jsx";
+import MensajesAdmin from "../components/MensajesAdmin.jsx";
+import { API_URL } from "../config.js";
 
 function AdminPanel() {
   const navigate = useNavigate();
@@ -25,7 +27,7 @@ function AdminPanel() {
 
       try {
         // 1. Verificar la sesión con Express
-        const respuesta = await fetch("http://localhost:3000/api/auth/me", {
+        const respuesta = await fetch(`${API_URL}/api/auth/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -47,7 +49,7 @@ function AdminPanel() {
 
         // 2. Obtener los productos
         const respuestaProductos = await fetch(
-          "http://localhost:3000/api/productos",
+          `${API_URL}/api/productos`,
         );
 
         if (!respuestaProductos.ok) {
@@ -103,7 +105,7 @@ function AdminPanel() {
 
     try {
       const respuesta = await fetch(
-        `http://localhost:3000/api/productos/${producto._id}`,
+        `${API_URL}/api/productos/${producto._id}`,
         {
           method: "DELETE",
           headers: {
@@ -239,6 +241,8 @@ function AdminPanel() {
 
             <p>Categoría: {producto.categoria}</p>
 
+            {producto.oferta && <p>Marcado como oferta</p>}
+
             <p>Tallas: {producto.tallas?.join(", ") || "Sin registrar"}</p>
 
             <button
@@ -276,6 +280,9 @@ function AdminPanel() {
           </div>
         ))}
       </div>
+
+      {/* Mensajes recibidos desde el formulario de contacto */}
+      <MensajesAdmin onSesionExpirada={cerrarSesion} />
 
       <Link
         to="/"

@@ -73,6 +73,9 @@ function Header() {
           <li>
             <Link to="/ofertas">Ofertas</Link>
           </li>
+          <li>
+            <Link to="/contacto">Contacto</Link>
+          </li>
         </ul>
       </nav>
 

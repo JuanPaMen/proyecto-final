@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { API_URL } from "../config.js";
+import BotonDescripcionIA from "./BotonDescripcionIA.jsx";
 
 function EditarProducto({ producto, onGuardado, onCancelar }) {
   const [formulario, setFormulario] = useState({
@@ -8,17 +10,18 @@ function EditarProducto({ producto, onGuardado, onCancelar }) {
     imagen: producto.imagen,
     descripcion: producto.descripcion || "",
     tallas: producto.tallas?.join(", ") || "",
+    oferta: Boolean(producto.oferta),
   });
 
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState("");
 
   const manejarCambio = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
     setFormulario({
       ...formulario,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -41,6 +44,7 @@ function EditarProducto({ producto, onGuardado, onCancelar }) {
       categoria: formulario.categoria,
       imagen: formulario.imagen.trim(),
       descripcion: formulario.descripcion.trim(),
+      oferta: formulario.oferta,
       tallas: [
         ...new Set(
           formulario.tallas
@@ -53,7 +57,7 @@ function EditarProducto({ producto, onGuardado, onCancelar }) {
 
     try {
       const respuesta = await fetch(
-        `http://localhost:3000/api/productos/${producto._id}`,
+        `${API_URL}/api/productos/${producto._id}`,
         {
           method: "PUT",
           headers: {
@@ -185,6 +189,25 @@ function EditarProducto({ producto, onGuardado, onCancelar }) {
           style={estiloCampo}
         />
       </div>
+
+      <BotonDescripcionIA
+        nombre={formulario.nombre}
+        categoria={formulario.categoria}
+        tallas={formulario.tallas}
+        onGenerada={(texto) =>
+          setFormulario((actual) => ({ ...actual, descripcion: texto }))
+        }
+      />
+
+      <label className="casilla-oferta">
+        <input
+          type="checkbox"
+          name="oferta"
+          checked={formulario.oferta}
+          onChange={manejarCambio}
+        />
+        Producto en oferta (aparece en la sección Ofertas)
+      </label>
 
       {error && (
         <p

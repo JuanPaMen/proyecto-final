@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { API_URL } from "../config.js";
+import BotonDescripcionIA from "./BotonDescripcionIA.jsx";
 
 const formularioInicial = {
   id: "",
@@ -8,6 +10,7 @@ const formularioInicial = {
   imagen: "",
   descripcion: "",
   tallas: "",
+  oferta: false,
 };
 
 function FormularioProducto({ onCreado }) {
@@ -17,11 +20,11 @@ function FormularioProducto({ onCreado }) {
 
   // Actualizar los campos del formulario
   const manejarCambio = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
     setFormulario({
       ...formulario,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -40,6 +43,7 @@ function FormularioProducto({ onCreado }) {
       categoria: formulario.categoria,
       imagen: formulario.imagen.trim(),
       descripcion: formulario.descripcion.trim(),
+      oferta: formulario.oferta,
       tallas: [
         ...new Set(
           formulario.tallas
@@ -55,7 +59,7 @@ function FormularioProducto({ onCreado }) {
         throw new Error("Debes iniciar sesión nuevamente.");
       }
 
-      const respuesta = await fetch("http://localhost:3000/api/productos", {
+      const respuesta = await fetch(`${API_URL}/api/productos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -201,6 +205,25 @@ function FormularioProducto({ onCreado }) {
           placeholder="Describe las características de la prenda..."
         />
       </div>
+
+      <BotonDescripcionIA
+        nombre={formulario.nombre}
+        categoria={formulario.categoria}
+        tallas={formulario.tallas}
+        onGenerada={(texto) =>
+          setFormulario((actual) => ({ ...actual, descripcion: texto }))
+        }
+      />
+
+      <label className="casilla-oferta">
+        <input
+          type="checkbox"
+          name="oferta"
+          checked={formulario.oferta}
+          onChange={manejarCambio}
+        />
+        Producto en oferta (aparece en la sección Ofertas)
+      </label>
 
       <button
         type="submit"

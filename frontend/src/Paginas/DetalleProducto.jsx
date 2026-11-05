@@ -1,27 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 
-// Imágenes de nuestros productos
-import camiseta from "../assets/img/sueteralemaniadeportivo.jpg";
-import polo from "../assets/img/camiseta.webp";
-import jean from "../assets/img/pantalon-jean.webp";
-import bermuda from "../assets/img/bermuda-jean.webp";
-import gorra from "../assets/img/gorra-new-era-floral.webp";
-
-// Relacionar imágenes con sus nombres
-const imagenes = {
-  "sueteralemaniadeportivo.jpg": camiseta,
-  "camiseta.webp": polo,
-  "pantalon-jean.webp": jean,
-  "bermuda-jean.webp": bermuda,
-  "gorra-new-era-floral.webp": gorra,
-};
-
-// Obtener la imagen correspondiente
-const obtenerImagen = (ruta) => {
-  const archivo = ruta?.split("/").pop();
-  return imagenes[archivo] || ruta;
-};
+import { API_URL } from "../config.js";
+import { resolverImagen } from "../utils/imagenes.js";
 
 // Convertir el precio a número
 const obtenerPrecio = (precio) => {
@@ -48,7 +29,7 @@ function DetalleProducto() {
         setTallaSeleccionada("");
 
         const respuesta = await fetch(
-          `http://localhost:3000/api/productos/${id}`,
+          `${API_URL}/api/productos/${id}`,
         );
 
         if (!respuesta.ok) {
@@ -84,7 +65,7 @@ function DetalleProducto() {
 
     const cargarRecomendados = async () => {
       try {
-        const respuesta = await fetch("http://localhost:3000/api/productos");
+        const respuesta = await fetch(`${API_URL}/api/productos`);
 
         if (!respuesta.ok) {
           throw new Error("Error al cargar recomendaciones");
@@ -130,11 +111,11 @@ function DetalleProducto() {
   if (!producto) return <p>Cargando producto...</p>;
 
   // Información del producto
-  const imagen = obtenerImagen(producto.imagen);
+  const imagen = resolverImagen(producto.imagen);
   const precio = obtenerPrecio(producto.precio);
 
   // Número de WhatsApp de la tienda
-  const numeroWhatsApp = "";
+  const numeroWhatsApp = import.meta.env.VITE_WHATSAPP || "";
 
   // 3. Agregar al carrito
   const agregarAlCarrito = () => {
@@ -353,7 +334,7 @@ function DetalleProducto() {
 
           <div className="contenedor-productos" style={{ marginTop: "20px" }}>
             {recomendados.map((item) => {
-              const imagenRecomendada = obtenerImagen(item.imagen);
+              const imagenRecomendada = resolverImagen(item.imagen);
 
               const precioRecomendado = obtenerPrecio(item.precio);
 
