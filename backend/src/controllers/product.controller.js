@@ -1,5 +1,9 @@
 const Product = require("../models/product.model");
 
+// Deja solo los dígitos del precio: "$65.000" -> "65000".
+// Así todos los productos guardan el precio con el mismo formato.
+const limpiarPrecio = (precio) => String(precio ?? "").replace(/\D/g, "");
+
 // 1. Obtener todos los productos
 const getProducts = async (req, res) => {
   try {
@@ -34,17 +38,24 @@ const getProductById = async (req, res) => {
 // 3. Agregar un producto
 const createProduct = async (req, res) => {
   try {
-    const { id, nombre, precio, categoria, imagen, descripcion, tallas } =
+    const { id, nombre, precio, categoria, imagen, descripcion, tallas, oferta } =
       req.body;
+
+    const precioLimpio = limpiarPrecio(precio);
+
+    if (!precioLimpio) {
+      return res.status(400).json({ mensaje: "El precio no es válido" });
+    }
 
     const nuevoProducto = new Product({
       id,
       nombre,
-      precio,
+      precio: precioLimpio,
       categoria,
       imagen,
       descripcion,
       tallas,
+      oferta: Boolean(oferta),
     });
 
     const productoGuardado = await nuevoProducto.save();
@@ -68,6 +79,7 @@ const updateProduct = async (req, res) => {
       "imagen",
       "descripcion",
       "tallas",
+      "oferta",
     ];
 
     const cambios = {};
@@ -82,6 +94,18 @@ const updateProduct = async (req, res) => {
       return res.status(400).json({
         mensaje: "No se enviaron campos para actualizar",
       });
+    }
+
+    if ("precio" in cambios) {
+      cambios.precio = limpiarPrecio(cambios.precio);
+
+      if (!cambios.precio) {
+        return res.status(400).json({ mensaje: "El precio no es válido" });
+      }
+    }
+
+    if ("oferta" in cambios) {
+      cambios.oferta = Boolean(cambios.oferta);
     }
 
     const productoActualizado = await Product.findByIdAndUpdate(
