@@ -1,0 +1,459 @@
+/* Estilos de los componentes nuevos: contacto, login, chatbot, mensajes del admin.
+   Usan las variables de colores definidas en styles.css */
+
+/* ---------- Utilidades ---------- */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.estado-carga {
+  color: #666666;
+  animation: parpadeo 1.2s ease-in-out infinite;
+}
+
+.aviso-ok,
+.aviso-error {
+  margin: 12px 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.aviso-ok {
+  background: #e7f7ec;
+  color: #14683a;
+}
+
+.aviso-error {
+  background: #fde8ec;
+  color: var(--rojo);
+}
+
+.btn-azul,
+.btn-rojo,
+.btn-ia {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--blanco);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-azul {
+  background: var(--azul);
+}
+
+.btn-rojo {
+  background: var(--rojo);
+}
+
+.btn-ia {
+  background: #6f42c1;
+  margin-top: 12px;
+}
+
+.btn-azul:hover:not(:disabled),
+.btn-rojo:hover:not(:disabled),
+.btn-ia:hover:not(:disabled) {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.btn-azul:disabled,
+.btn-rojo:disabled,
+.btn-ia:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Botón-enlace dentro de la tarjeta de producto */
+.btn-enlace {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.etiqueta-oferta {
+  display: inline-block;
+  background: var(--rojo);
+  color: var(--blanco);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+}
+
+/* Las tarjetas de producto aparecen suavemente */
+.contenedor-productos .producto {
+  animation: aparecer 0.45s ease both;
+}
+
+/* ---------- Formularios (contacto y login) ---------- */
+.tarjeta-formulario {
+  width: 90%;
+  max-width: 520px;
+  margin: 50px auto;
+  padding: 30px;
+  background: var(--blanco);
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  animation: aparecer 0.4s ease both;
+}
+
+.tarjeta-formulario h2 {
+  color: var(--azul);
+  margin-bottom: 8px;
+}
+
+.tarjeta-formulario > p {
+  color: #666666;
+  margin-bottom: 22px;
+}
+
+.campo {
+  margin-bottom: 16px;
+}
+
+.campo label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.campo input,
+.campo textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  outline: 2px solid var(--azul);
+  outline-offset: 1px;
+}
+
+.campo textarea {
+  resize: vertical;
+}
+
+.contador {
+  display: block;
+  text-align: right;
+  color: #888888;
+  margin-top: 4px;
+}
+
+/* Campo anti-spam: fuera de la pantalla */
+.campo-oculto {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.tarjeta-formulario .btn-azul {
+  width: 100%;
+  padding: 13px;
+}
+
+.tarjeta-login {
+  max-width: 420px;
+  margin-top: 65px;
+}
+
+.login-titulo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.login-subtitulo {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.casilla {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 18px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.enlace-centrado {
+  display: block;
+  text-align: center;
+  margin-top: 22px;
+  color: var(--azul);
+  text-decoration: none;
+}
+
+/* ---------- Panel admin: mensajes y generador IA ---------- */
+.admin-mensajes {
+  background: var(--blanco);
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 25px;
+}
+
+.insignia {
+  background: var(--rojo);
+  color: var(--blanco);
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  vertical-align: middle;
+}
+
+.mensaje-item {
+  padding: 15px;
+  margin-top: 15px;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+}
+
+.mensaje-nuevo {
+  border-color: var(--azul);
+  background: #f2f8ff;
+}
+
+.mensaje-item header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.mensaje-asunto {
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.mensaje-texto {
+  margin-top: 8px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.mensaje-acciones {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.casilla-oferta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  cursor: pointer;
+}
+
+/* ---------- Chatbot ---------- */
+.chat-boton {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 50;
+  width: 58px;
+  height: 58px;
+  border: none;
+  border-radius: 50%;
+  background: var(--azul);
+  color: var(--blanco);
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.chat-boton:hover {
+  transform: scale(1.08);
+  background: var(--azul-menu);
+}
+
+.chat-ventana {
+  position: fixed;
+  right: 20px;
+  bottom: 90px;
+  z-index: 50;
+  width: min(360px, calc(100vw - 40px));
+  height: min(520px, calc(100vh - 130px));
+  display: flex;
+  flex-direction: column;
+  background: var(--blanco);
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  animation: subir 0.25s ease both;
+}
+
+.chat-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: var(--azul);
+  color: var(--blanco);
+}
+
+.chat-encabezado button {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.chat-mensajes {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #f6f6f6;
+}
+
+.chat-burbuja {
+  max-width: 85%;
+  padding: 10px 13px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  animation: aparecer 0.25s ease both;
+}
+
+.chat-asistente {
+  align-self: flex-start;
+  background: var(--blanco);
+  color: var(--negro);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-usuario {
+  align-self: flex-end;
+  background: var(--azul);
+  color: var(--blanco);
+  border-bottom-right-radius: 4px;
+}
+
+.chat-error {
+  background: #fde8ec;
+  color: var(--rojo);
+}
+
+.chat-escribiendo {
+  color: #888888;
+  animation: parpadeo 1.2s ease-in-out infinite;
+}
+
+.chat-sugerencias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chat-sugerencias button {
+  border: 1px solid var(--azul);
+  background: var(--blanco);
+  color: var(--azul);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.chat-sugerencias button:hover {
+  background: var(--azul);
+  color: var(--blanco);
+}
+
+.chat-formulario {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid #e3e3e3;
+}
+
+.chat-formulario input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid #cccccc;
+  border-radius: 20px;
+  font: inherit;
+}
+
+.chat-formulario button {
+  width: 42px;
+  border: none;
+  border-radius: 50%;
+  background: var(--azul);
+  color: var(--blanco);
+  cursor: pointer;
+}
+
+.chat-formulario button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chat-aviso {
+  text-align: center;
+  color: #888888;
+  padding: 0 10px 8px;
+  font-size: 11px;
+}
+
+/* ---------- Animaciones ---------- */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes parpadeo {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* Respetar a quien tiene desactivadas las animaciones en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

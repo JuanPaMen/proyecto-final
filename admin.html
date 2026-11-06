@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - It's Peak</title>
+    <style>
+        :root {
+            --blanco: #ffffff;
+            --negro: #111111;
+            --azul: #006cf9;
+            --rojo: #d90429;
+            --fondo-body: rgb(247, 244, 239);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--fondo-body);
+            font-family: sans-serif;
+            color: var(--negro);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--blanco);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: var(--azul);
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: var(--negro);
+            margin-bottom: 15px;
+            margin-top: 30px;
+        }
+
+        p.subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--azul);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--azul);
+            color: var(--blanco);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--rojo);
+        }
+
+        .volver {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: var(--azul);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        #mensaje {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Lista de administración de productos */
+        .admin-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .admin-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        .admin-item span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .btn-eliminar {
+            background-color: var(--rojo);
+            color: var(--blanco);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn-eliminar:hover {
+            background-color: #a0031d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Panel de Administración</h1>
+        <p class="subtitle">Agrega o elimina productos de la base de datos de It's Peak</p>
+
+        <!-- Formulario para Crear -->
+        <form id="product-form">
+            <div class="form-group">
+                <label for="id">ID Numérico único:</label>
+                <input type="number" id="id" required placeholder="Ej. 6">
+            </div>
+
+            <div class="form-group">
+                <label for="nombre">Nombre de la prenda:</label>
+                <input type="text" id="nombre" required placeholder="Ej. Chaqueta Oversize Negra">
+            </div>
+
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="text" id="precio" required placeholder="Ej. $95.000">
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <input type="text" id="categoria" required placeholder="Ej. chaquetas">
+            </div>
+
+            <div class="form-group">
+                <label for="imagen">Ruta de la imagen:</label>
+                <input type="text" id="imagen" required placeholder="Ej. assets/img/tu-imagen.jpg">
+            </div>
+
+            <button type="submit" class="btn-submit">Guardar Producto</button>
+        </form>
+
+        <p id="mensaje"></p>
+
+        <!-- Sección para ver y eliminar productos existentes -->
+        <h2>Productos en la Base de Datos</h2>
+        <div id="lista-admin" class="admin-lista">
+            <!-- Los productos se cargarán aquí dinámicamente -->
+        </div>
+
+        <a href="index.html" class="volver">← Volver a la tienda</a>
+    </div>
+
+    <script>
+        const form = document.getElementById('product-form');
+        const mensaje = document.getElementById('mensaje');
+        const listaAdmin = document.getElementById('lista-admin');
+
+        // 1. Función para cargar y listar los productos en el panel de admin
+        const cargarProductosAdmin = async () => {
+            try {
+                const respuesta = await fetch('http://localhost:3000/api/productos');
+                const productos = await respuesta.json();
+
+                listaAdmin.innerHTML = '';
+
+                productos.forEach(producto => {
+                    const item = document.createElement('div');
+                    item.classList.add('admin-item');
+
+                    item.innerHTML = `
+                        <span><strong>${producto.nombre}</strong> (${producto.precio})</span>
+                        <button class="btn-eliminar" onclick="eliminarProducto('${producto._id}')">Eliminar</button>
+                    `;
+
+                    listaAdmin.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Error al cargar productos para admin:', error);
+            }
+        };
+
+        // 2. Función para eliminar un producto
+        window.eliminarProducto = async (idMongo) => {
+            if (confirm('¿Estás seguro de que deseas eliminar este producto de la base de datos?')) {
+                try {
+                    const respuesta = await fetch(`http://localhost:3000/api/productos/${idMongo}`, {
+                        method: 'DELETE',
+                    });
+
+                    if (respuesta.ok) {
+                        alert('¡Producto eliminado con éxito!');
+                        cargarProductosAdmin(); // Recargar la lista automáticamente
+                    } else {
+                        alert('Error al intentar eliminar el producto.');
+                    }
+                } catch (error) {
+                    console.error('Error de red al eliminar:', error);
+                }
+            }
+        };
+
+        // 3. Registrar nuevo producto desde el formulario
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nuevoProducto = {
+                id: Number(document.getElementById('id').value),
+                nombre: document.getElementById('nombre').value,
+                precio: document.getElementById('precio').value,
+                categoria: document.getElementById('categoria').value,
+                imagen: document.getElementById('imagen').value
+            };
+
+            try {
+                const respuesta = await fetch('http://localhost:3000/api/productos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(nuevoProducto)
+                });
+
+                const resultado = await respuesta.json();
+
+                if (respuesta.ok) {
+                    mensaje.style.color = 'green';
+                    mensaje.textContent = '¡Producto agregado exitosamente a MongoDB! 🎉';
+                    form.reset();
+                    cargarProductosAdmin(); // Actualizar la lista en tiempo real
+                } else {
+                    mensaje.style.color = 'red';
+                    mensaje.textContent = `Error: ${resultado.mensaje || 'No se pudo guardar'}`;
+                }
+            } catch (error) {
+                console.error('Error de red:', error);
+                mensaje.style.color = 'red';
+                mensaje.textContent = 'Error de conexión con el servidor.';
+            }
+        });
+
+        // Cargar los productos al abrir la página de administración
+        document.addEventListener('DOMContentLoaded', cargarProductosAdmin);
+    </script>
+
+</body>
+</html>
