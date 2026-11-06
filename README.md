@@ -34,17 +34,17 @@ Necesitas Node.js 20 o superior y una base de datos MongoDB (por ejemplo, gratis
 **Backend**
 ```bash
 cd backend
-cp .env.example .env     # en Windows: copy .env.example .env  (y completa los valores)
+cp .env.example .env     # en Windows: copy .env.example .env
 npm install
-npm run admins           # crea los administradores (solo la primera vez)
-npm run dev              # http://localhost:3000
+npm run admins           # crea los administradores
+npm run dev
 ```
 
 **Frontend** (en otra terminal)
 ```bash
 cd frontend
 npm install
-npm run dev              # http://localhost:5173
+npm run dev
 ```
 
 ## Variables de entorno
