@@ -22,7 +22,9 @@ const instruccionesChat = async () => {
   const catalogo = productos.length
     ? productos
         .map((p) => {
-          const tallas = p.tallas?.length ? p.tallas.join(", ") : "sin registrar";
+          const tallas = p.tallas?.length
+            ? p.tallas.join(", ")
+            : "sin registrar";
           const oferta = p.oferta ? " | EN OFERTA" : "";
           const detalle = p.descripcion ? ` | ${p.descripcion}` : "";
           return `- ${p.nombre} | categoría: ${p.categoria} | precio: $${formatearPrecio(p.precio)} COP | tallas: ${tallas}${oferta}${detalle}`;
@@ -63,29 +65,46 @@ const esperar = (ms) => new Promise((resolver) => setTimeout(resolver, ms));
 
 // Un solo intento contra un modelo de Gemini
 const pedirAGemini = async (modelo, { instrucciones, mensajes, maxTokens }) => {
-  const respuesta = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": process.env.GEMINI_API_KEY,
+  let respuesta;
+
+  try {
+    respuesta = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": process.env.GEMINI_API_KEY,
+        },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: instrucciones }] },
+          contents: mensajes.map((m) => ({
+            role: m.rol === "assistant" ? "model" : "user",
+            parts: [{ text: m.texto }],
+          })),
+          generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 },
+        }),
+        // Si el modelo no responde en 12 s, pasamos al siguiente
+        signal: AbortSignal.timeout(12000),
       },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: instrucciones }] },
-        contents: mensajes.map((m) => ({
-          role: m.rol === "assistant" ? "model" : "user",
-          parts: [{ text: m.texto }],
-        })),
-        generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 },
-      }),
-      signal: AbortSignal.timeout(25000),
-    },
-  );
+    );
+  } catch (error) {
+    if (error.name === "TimeoutError" || error.name === "AbortError") {
+      console.error(`Gemini (${modelo}) no respondió a tiempo.`);
+      const tiempoAgotado = new Error("IA_ERROR");
+      tiempoAgotado.status = 504;
+      tiempoAgotado.tiempoAgotado = true;
+      throw tiempoAgotado;
+    }
+    throw error;
+  }
 
   if (!respuesta.ok) {
     const detalle = await respuesta.text();
-    console.error(`Gemini (${modelo}) respondió ${respuesta.status}:`, detalle.slice(0, 300));
+    console.error(
+      `Gemini (${modelo}) respondió ${respuesta.status}:`,
+      detalle.slice(0, 300),
+    );
     const error = new Error("IA_ERROR");
     error.status = respuesta.status;
     throw error;
@@ -101,9 +120,10 @@ const pedirAGemini = async (modelo, { instrucciones, mensajes, maxTokens }) => {
 // Los errores 429 (cuota) y 5xx (servidor saturado) suelen ser pasajeros
 const esTemporal = (status) => status === 429 || status >= 500;
 
-// Reintenta el modelo principal y, si sigue saturado, prueba el de respaldo
-// (GEMINI_FALLBACK_MODEL, opcional). Los errores permanentes (clave mala,
-// modelo inexistente) no se reintentan porque no se van a arreglar solos.
+// Prueba el modelo principal y, si está saturado o no responde, el de respaldo
+// (GEMINI_FALLBACK_MODEL, opcional). Con un 503 reintenta una vez; con un tiempo
+// agotado pasa directo al siguiente modelo para no hacer esperar al cliente.
+// Los errores permanentes (clave mala, modelo inexistente) no se reintentan.
 const llamarGemini = async (opciones) => {
   const modelos = [
     process.env.GEMINI_MODEL || "gemini-3.8-flash",
@@ -120,6 +140,7 @@ const llamarGemini = async (opciones) => {
         ultimoError = error;
 
         if (!esTemporal(error.status)) throw error;
+        if (error.tiempoAgotado) break;
 
         if (intento === 0) await esperar(1500);
       }
@@ -148,7 +169,10 @@ const llamarAnthropic = async ({ instrucciones, mensajes, maxTokens }) => {
 
   if (!respuesta.ok) {
     const detalle = await respuesta.text();
-    console.error(`Anthropic respondió ${respuesta.status}:`, detalle.slice(0, 300));
+    console.error(
+      `Anthropic respondió ${respuesta.status}:`,
+      detalle.slice(0, 300),
+    );
     const error = new Error("IA_ERROR");
     error.status = respuesta.status;
     throw error;
