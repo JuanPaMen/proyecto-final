@@ -92,6 +92,7 @@ function FormularioProducto({ onCreado }) {
 
   return (
     <form
+      className="formulario-producto"
       onSubmit={guardarProducto}
       style={{
         background: "white",
@@ -100,7 +101,18 @@ function FormularioProducto({ onCreado }) {
         marginBottom: "25px",
       }}
     >
-      <h3 style={{ marginBottom: "20px" }}>Agregar nuevo producto</h3>
+      <div className="formulario-producto-titulo">
+        <span className="formulario-producto-icono">
+          <i className="bi bi-bag-plus"></i>
+        </span>
+
+        <div>
+          <h3>Agregar nuevo producto</h3>
+          <p>
+            Completa la información de la prenda para publicarla en It's Peak.
+          </p>
+        </div>
+      </div>
 
       <div
         style={{

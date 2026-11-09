@@ -4,6 +4,7 @@ import FormularioProducto from "../components/FormularioProducto.jsx";
 import EditarProducto from "../components/EditarProducto.jsx";
 import MensajesAdmin from "../components/MensajesAdmin.jsx";
 import { API_URL } from "../config.js";
+import { resolverImagen } from "../utils/imagenes.js";
 
 function AdminPanel() {
   const navigate = useNavigate();
@@ -48,9 +49,7 @@ function AdminPanel() {
         const datosAdmin = await respuesta.json();
 
         // 2. Obtener los productos
-        const respuestaProductos = await fetch(
-          `${API_URL}/api/productos`,
-        );
+        const respuestaProductos = await fetch(`${API_URL}/api/productos`);
 
         if (!respuestaProductos.ok) {
           throw new Error("No se pudieron cargar los productos.");
@@ -228,56 +227,64 @@ function AdminPanel() {
         </p>
 
         {productos.map((producto) => (
-          <div
-            key={producto._id}
-            style={{
-              padding: "15px 0",
-              borderBottom: "1px solid #ddd",
-            }}
-          >
-            <h4>{producto.nombre}</h4>
+          <article key={producto._id} className="admin-producto-item">
+            <img
+              src={resolverImagen(producto.imagen)}
+              alt={producto.nombre}
+              className="admin-producto-imagen"
+            />
 
-            <p>Precio: {producto.precio}</p>
+            <div className="admin-producto-contenido">
+              <div className="admin-producto-encabezado">
+                <h4>{producto.nombre}</h4>
 
-            <p>Categoría: {producto.categoria}</p>
+                <strong className="admin-producto-precio">
+                  $
+                  {Number(
+                    String(producto.precio).replace(/\D/g, ""),
+                  ).toLocaleString("es-CO")}
+                </strong>
+              </div>
 
-            {producto.oferta && <p>Marcado como oferta</p>}
+              <div className="admin-producto-datos">
+                <span>
+                  <i className="bi bi-tag"></i>
+                  {producto.categoria}
+                </span>
 
-            <p>Tallas: {producto.tallas?.join(", ") || "Sin registrar"}</p>
+                <span>
+                  <i className="bi bi-rulers"></i>
+                  {producto.tallas?.length
+                    ? producto.tallas.join(", ")
+                    : "Sin tallas registradas"}
+                </span>
+              </div>
 
-            <button
-              type="button"
-              onClick={() => setProductoEditando(producto)}
-              style={{
-                backgroundColor: "#006cf9",
-                color: "white",
-                border: "none",
-                padding: "9px 16px",
-                borderRadius: "8px",
-                cursor: "pointer",
-                marginTop: "12px",
-              }}
-            >
-              Editar
-            </button>
+              {producto.oferta && (
+                <span className="admin-producto-oferta">En oferta</span>
+              )}
 
-            <button
-              type="button"
-              onClick={() => eliminarProducto(producto)}
-              style={{
-                backgroundColor: "#d90429",
-                color: "white",
-                border: "none",
-                padding: "9px 16px",
-                borderRadius: "8px",
-                cursor: "pointer",
-                marginTop: "12px",
-                marginLeft: "10px",
-              }}
-            >
-              Eliminar
-            </button>
-          </div>
+              <div className="admin-producto-acciones">
+                <button
+                  type="button"
+                  className="btn-azul"
+                  onClick={() => setProductoEditando(producto)}
+                >
+                  <i className="bi bi-pencil-square"></i>
+                  Editar
+                </button>
+
+                <button
+                  type="button"
+                  className="btn-rojo"
+                  onClick={() => eliminarProducto(producto)}
+                >
+                  <i className="bi bi-trash3"></i>
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </article>
         ))}
       </div>
 

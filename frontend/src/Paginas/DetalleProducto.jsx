@@ -28,9 +28,7 @@ function DetalleProducto() {
         setProducto(null);
         setTallaSeleccionada("");
 
-        const respuesta = await fetch(
-          `${API_URL}/api/productos/${id}`,
-        );
+        const respuesta = await fetch(`${API_URL}/api/productos/${id}`);
 
         if (!respuesta.ok) {
           throw new Error("Producto no encontrado");
@@ -188,6 +186,7 @@ function DetalleProducto() {
 
   return (
     <section
+      className="detalle-producto"
       style={{
         width: "90%",
         maxWidth: "950px",
@@ -286,30 +285,38 @@ function DetalleProducto() {
             }}
           >
             {/* Agregar al carrito */}
-            <button className="btn-carrito" onClick={agregarAlCarrito}>
-              Agregar al carrito
+            <button
+              className="btn-carrito btn-accion-icono"
+              onClick={agregarAlCarrito}
+            >
+              <i className="bi bi-cart3" aria-hidden="true"></i>
+              <span>Agregar al carrito</span>
             </button>
 
             {/* Consultar por WhatsApp */}
+
             <button
               onClick={consultarWhatsApp}
+              className="btn-accion-icono"
               style={{
                 width: "100%",
                 padding: "12px",
-                border: "1px solid #006cf9",
+                border: "1px solid #25D366",
                 borderRadius: "10px",
-                backgroundColor: "white",
-                color: "#006cf9",
-                fontWeight: "600",
+                backgroundColor: "#25D366",
+                color: "#ffffff",
+                fontWeight: "700",
                 cursor: "pointer",
               }}
             >
-              Consultar por WhatsApp
+              <i className="bi bi-whatsapp" aria-hidden="true"></i>
+              <span>Consultar por WhatsApp</span>
             </button>
 
             {/* Compartir producto */}
             <button
               onClick={compartirProducto}
+              className="btn-accion-icono"
               style={{
                 width: "100%",
                 padding: "12px",
@@ -321,8 +328,34 @@ function DetalleProducto() {
                 cursor: "pointer",
               }}
             >
-              Compartir producto
+              <i className="bi bi-share" aria-hidden="true"></i>
+              <span>Compartir producto</span>
             </button>
+          </div>
+
+          {/* MÉTODOS DE PAGO */}
+          <div className="detalle-metodos-pago">
+            <h4>
+              <i className="bi bi-shield-check"></i>
+              Medios de pago
+            </h4>
+
+            <div className="metodos-pago-lista">
+              <span>
+                <i className="bi bi-phone"></i>
+                Nequi
+              </span>
+
+              <span>
+                <i className="bi bi-bank"></i>
+                Transferencia
+              </span>
+
+              <span>
+                <i className="bi bi-cash-coin"></i>
+                Efectivo
+              </span>
+            </div>
           </div>
         </div>
       </div>
