@@ -21,7 +21,9 @@ const instruccionesChat = async () => {
   const catalogo = productos.length
     ? productos
         .map((p) => {
-          const tallas = p.tallas?.length ? p.tallas.join(", ") : "sin registrar";
+          const tallas = p.tallas?.length
+            ? p.tallas.join(", ")
+            : "sin registrar";
           const oferta = p.oferta ? " | EN OFERTA" : "";
           const detalle = p.descripcion ? ` | ${p.descripcion}` : "";
           return `- ${p.nombre} | categoría: ${p.categoria} | precio: $${formatearPrecio(p.precio)} COP | tallas: ${tallas}${oferta}${detalle}`;
@@ -98,7 +100,10 @@ const pedirAGemini = async (modelo, { instrucciones, mensajes, maxTokens }) => {
 
   if (!respuesta.ok) {
     const detalle = await respuesta.text();
-    console.error(`Gemini (${modelo}) respondió ${respuesta.status}:`, detalle.slice(0, 300));
+    console.error(
+      `Gemini (${modelo}) respondió ${respuesta.status}:`,
+      detalle.slice(0, 300),
+    );
     const error = new Error("IA_ERROR");
     error.status = respuesta.status;
     throw error;
@@ -163,7 +168,10 @@ const llamarAnthropic = async ({ instrucciones, mensajes, maxTokens }) => {
 
   if (!respuesta.ok) {
     const detalle = await respuesta.text();
-    console.error(`Anthropic respondió ${respuesta.status}:`, detalle.slice(0, 300));
+    console.error(
+      `Anthropic respondió ${respuesta.status}:`,
+      detalle.slice(0, 300),
+    );
     const error = new Error("IA_ERROR");
     error.status = respuesta.status;
     throw error;
