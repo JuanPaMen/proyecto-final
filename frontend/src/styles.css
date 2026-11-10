@@ -1284,3 +1284,162 @@ h4 {
     font-size: 10px;
   }
 }
+
+/* HERO, carrusel o slider */
+
+.principal.hero-carrusel {
+  position: relative;
+  display: block;
+  height: 440px;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #111111;
+}
+
+/* Contenedor que se desplaza */
+.hero-pista {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease-in-out;
+}
+
+/* Cada imagen del carrusel */
+.hero-diapositiva {
+  flex: 0 0 100%;
+  min-width: 0;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+
+  padding: 45px 90px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Contenido */
+.hero-diapositiva .principal-contenido {
+  max-width: 530px;
+}
+
+.hero-diapositiva h2 {
+  color: white;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 900;
+  line-height: 1.08;
+}
+
+/* Flechas */
+.hero-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+
+  font-size: 19px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.hero-control:hover {
+  background: #006cf9;
+}
+
+.hero-anterior {
+  left: 15px;
+}
+
+.hero-siguiente {
+  right: 15px;
+}
+
+/* Puntos inferiores */
+.hero-indicadores {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+
+  display: flex;
+  gap: 9px;
+}
+
+.hero-indicadores button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+
+  transition:
+    width 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.hero-indicadores button.activo {
+  width: 28px;
+  background: #006cf9;
+}
+
+/* Versión móvil */
+@media (max-width: 600px) {
+  .principal.hero-carrusel {
+    height: 380px;
+    min-height: 0;
+  }
+
+  .hero-diapositiva {
+    padding: 45px 48px;
+    background-position: center;
+  }
+
+  .hero-diapositiva h2 {
+    font-size: 35px;
+  }
+
+  .hero-diapositiva p {
+    font-size: 14px;
+  }
+
+  .hero-control {
+    width: 31px;
+    height: 31px;
+    font-size: 14px;
+  }
+
+  .hero-anterior {
+    left: 8px;
+  }
+
+  .hero-siguiente {
+    right: 8px;
+  }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .hero-pista {
+    transition: none;
+  }
+}

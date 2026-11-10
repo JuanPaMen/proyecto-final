@@ -193,25 +193,6 @@ function AdminPanel() {
         }}
       />
 
-      {/* Formulario para editar productos */}
-      {productoEditando && (
-        <EditarProducto
-          key={productoEditando._id}
-          producto={productoEditando}
-          onGuardado={(actualizado) => {
-            setProductos((anteriores) =>
-              anteriores.map((item) =>
-                item._id === actualizado._id ? actualizado : item,
-              ),
-            );
-
-            setProductoEditando(null);
-            alert("¡Producto actualizado correctamente!");
-          }}
-          onCancelar={() => setProductoEditando(null)}
-        />
-      )}
-
       {/* Lista de productos */}
       <div
         style={{
@@ -284,6 +265,26 @@ function AdminPanel() {
                 </button>
               </div>
             </div>
+            {/*Formulario para editar producto, esta dentro de las cards */}
+            {productoEditando?._id === producto._id && (
+              <div className="admin-producto-editor">
+                <EditarProducto
+                  key={producto._id}
+                  producto={productoEditando}
+                  onGuardado={(actualizado) => {
+                    setProductos((anteriores) =>
+                      anteriores.map((item) =>
+                        item._id === actualizado._id ? actualizado : item,
+                      ),
+                    );
+
+                    setProductoEditando(null);
+                    alert("¡Producto actualizado correctamente!");
+                  }}
+                  onCancelar={() => setProductoEditando(null)}
+                />
+              </div>
+            )}
           </article>
         ))}
       </div>
