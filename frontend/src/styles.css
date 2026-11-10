@@ -40,14 +40,12 @@ body {
   flex-wrap: wrap;
 }
 
-/*** Logo ***/
 .logo h1 {
   font-size: 24px;
   color: var(--azul);
   letter-spacing: 1px;
 }
 
-/*** Menú de navegación ***/
 .navegacion {
   width: 100%;
   order: 1;
@@ -140,14 +138,12 @@ body {
   display: block;
 }
 
-/** Línea divisora **/
 hr {
   border: none;
   background-color: var(--rojo);
   height: 2px;
 }
 
-/*Administador*/
 .admin {
   margin-left: 15px;
 }
@@ -168,7 +164,6 @@ hr {
   color: var(--blanco);
 }
 
-/* Carrito de compras */
 .cart-icon {
   margin-left: auto;
 }
@@ -262,14 +257,12 @@ hr {
   margin-bottom: 30px;
 }
 
-/*Contenedor de los productos*/
 .contenedor-productos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 25px;
 }
 
-/*Tarjetas o Cards de los productos*/
 .producto {
   background-color: var(--blanco);
   border: 1px solid #eeeeee;
@@ -298,7 +291,6 @@ hr {
   transform: scale(1.03);
 }
 
-/*Informacion del producto*/
 .producto-info {
   padding: 20px;
   display: flex;
@@ -332,7 +324,6 @@ hr {
   font-size: 17px;
 }
 
-/*Boton de agregar al carrito*/
 .btn-carrito {
   width: 100%;
   padding: 12px;
@@ -357,13 +348,11 @@ hr {
     padding: 20px 15px;
   }
 
-  /** Menú hamburguesa **/
   .menu-hamburguesa {
     display: block;
     margin-left: 12px;
   }
 
-  /** Botón de cerrar **/
   .menu-hamburguesa.abierto {
     position: fixed;
     top: 20px;
@@ -373,7 +362,6 @@ hr {
     color: var(--azul-claro);
   }
 
-  /** Navegación a pantalla completa **/
   .navegacion {
     display: none;
     position: fixed;
@@ -416,7 +404,6 @@ hr {
     overflow: hidden;
   }
 
-  /** Carrito **/
   .cart-icon {
     text-align: center;
   }
@@ -426,7 +413,6 @@ hr {
     padding: 8px 10px;
   }
 
-  /** Sección principal **/
   .principal {
     width: 95%;
     min-height: 400px;
@@ -435,7 +421,6 @@ hr {
   }
 }
 
-/*admin*/
 .admin a {
   font-size: 12px;
   padding: 10px 10px;
@@ -443,7 +428,6 @@ hr {
 
 /* ===== MEJORAS VISUALES IT'S PEAK ===== */
 
-/* Tipografía general */
 body {
   font-family: "Segoe UI", Arial, sans-serif;
   color: var(--negro);
@@ -458,7 +442,6 @@ select {
   font-family: inherit;
 }
 
-/* Títulos más modernos */
 h1,
 h2,
 h3,
@@ -466,7 +449,6 @@ h4 {
   line-height: 1.2;
 }
 
-/* Identidad del logo */
 .logo h1 {
   font-size: 28px;
   font-weight: 900;
@@ -474,18 +456,15 @@ h4 {
   color: var(--azul);
 }
 
-/* Títulos de las secciones */
 .productos h2 {
   font-weight: 800;
   letter-spacing: -0.7px;
 }
 
-/* Navegación */
 .menu > li > a {
   font-weight: 600;
 }
 
-/* Ajuste para celulares */
 @media (max-width: 600px) {
   .logo h1 {
     font-size: 23px;
@@ -580,7 +559,6 @@ h4 {
   transform: translateY(-3px);
 }
 
-/* Adaptación a celulares */
 @media (max-width: 600px) {
   .principal {
     width: 95%;
@@ -605,7 +583,6 @@ h4 {
 
 /* Mejorando las tarjetas de los productos (Cards) */
 
-/* Distribución del catálogo */
 .contenedor-productos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 235px), 1fr));
@@ -613,7 +590,6 @@ h4 {
   align-items: stretch;
 }
 
-/* Tarjeta individual */
 .producto {
   background: #ffffff;
   border: 1px solid #e9e9e9;
@@ -649,7 +625,6 @@ h4 {
   transform: scale(1.035);
 }
 
-/* Información de la prenda */
 .producto-info {
   padding: 18px;
   display: flex;
@@ -670,7 +645,6 @@ h4 {
   color: var(--rojo-fuerte);
 }
 
-/* Precio destacado */
 .producto-info .precio {
   font-size: 21px;
   font-weight: 800;
@@ -678,7 +652,6 @@ h4 {
   margin: 0 0 6px;
 }
 
-/* Botón para elegir talla */
 .producto-info .btn-enlace {
   display: flex;
   align-items: center;
@@ -700,7 +673,6 @@ h4 {
   color: white;
 }
 
-/* Etiqueta de ofertas */
 .etiqueta-oferta {
   align-self: flex-start;
   background: var(--rojo);
@@ -712,7 +684,6 @@ h4 {
   text-transform: uppercase;
 }
 
-/* Adaptación para celulares */
 @media (max-width: 600px) {
   .contenedor-productos {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -746,7 +717,6 @@ h4 {
 
 /* ===== Detalle de Productos ===== */
 
-/* Contenedor de la ficha principal */
 .detalle-producto > div:first-child {
   background: #ffffff;
   padding: 28px;
@@ -755,7 +725,6 @@ h4 {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
 }
 
-/* Fotografía principal */
 .detalle-producto > div:first-child > img {
   aspect-ratio: 4 / 5;
   object-fit: cover;
@@ -763,7 +732,6 @@ h4 {
   border-radius: 14px;
 }
 
-/* Nombre del producto */
 .detalle-producto > div:first-child h2 {
   font-size: clamp(24px, 3vw, 32px);
   font-weight: 900;
@@ -771,14 +739,12 @@ h4 {
   color: #111111;
 }
 
-/* Precio */
 .detalle-producto > div:first-child h3 {
   font-size: 27px;
   font-weight: 800;
   color: var(--azul);
 }
 
-/* Selector de tallas */
 .detalle-producto button[aria-pressed] {
   font-weight: 700;
   min-width: 48px;
@@ -795,7 +761,6 @@ h4 {
   transform: translateY(-2px);
 }
 
-/* Botones principales */
 .detalle-producto > div:first-child button {
   transition:
     transform 0.2s ease,
@@ -811,13 +776,11 @@ h4 {
   outline-offset: 3px;
 }
 
-/* Recomendaciones */
 .detalle-producto > div:last-child h2 {
   font-weight: 800;
   letter-spacing: -0.5px;
 }
 
-/* Adaptación para celulares */
 @media (max-width: 600px) {
   .detalle-producto > div:first-child {
     padding: 16px;
@@ -1017,8 +980,6 @@ h4 {
   margin-bottom: 8px;
 }
 
-/* Productos del carrito */
-
 .carrito-lista {
   display: flex;
   flex-direction: column;
@@ -1037,8 +998,6 @@ h4 {
   box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
 }
 
-/* Imagen */
-
 .carrito-item .carrito-foto {
   width: 120px;
   height: 150px;
@@ -1046,8 +1005,6 @@ h4 {
   border-radius: 10px;
   background: #f4f4f4;
 }
-
-/* Información */
 
 .carrito-info {
   display: flex;
@@ -1077,8 +1034,6 @@ h4 {
   font-weight: 900;
   margin-top: 8px;
 }
-
-/* Controles */
 
 .carrito-acciones {
   display: flex;
@@ -1113,8 +1068,6 @@ h4 {
   font-weight: 800;
 }
 
-/* Eliminar producto */
-
 .carrito-item .carrito-eliminar {
   display: inline-flex;
   align-items: center;
@@ -1129,8 +1082,6 @@ h4 {
   font-weight: 700;
   cursor: pointer;
 }
-
-/* Total */
 
 .carrito-resumen {
   display: flex;
@@ -1155,8 +1106,6 @@ h4 {
   color: var(--azul);
 }
 
-/* Carrito vacío */
-
 .carrito-vacio {
   padding: 55px 20px;
   background: white;
@@ -1178,8 +1127,6 @@ h4 {
   border-radius: 8px;
   text-decoration: none;
 }
-
-/* Celulares */
 
 @media (max-width: 600px) {
   .carrito-item {
@@ -1212,7 +1159,6 @@ h4 {
 
 /* ICONOS Y MEDIOS DE PAGO de DetalleProducto*/
 
-/* Botones con iconos */
 .detalle-producto .btn-accion-icono {
   display: flex;
   align-items: center;
@@ -1224,8 +1170,6 @@ h4 {
   font-size: 19px;
   line-height: 1;
 }
-
-/* ===== MEDIOS DE PAGO COMPACTOS ===== */
 
 .detalle-metodos-pago {
   margin-top: 14px;

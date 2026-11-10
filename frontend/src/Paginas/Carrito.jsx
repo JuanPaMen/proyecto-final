@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 function Carrito() {
+  // El carrito vive en localStorage, por eso sigue ahí aunque se recargue la página
   const [carrito, setCarrito] = useState(() => {
     try {
       const datos = JSON.parse(localStorage.getItem("carrito") || "[]");
 
       return Array.isArray(datos) ? datos : [];
     } catch {
+      // Si el contenido guardado está dañado, se empieza con el carrito vacío
       return [];
     }
   });

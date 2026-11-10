@@ -3,7 +3,6 @@ import { Link } from "react-router";
 function Producto({ id, nombre, precio, imagen, oferta }) {
   return (
     <div className="producto">
-      {/* Imagen que lleva al detalle */}
       <Link to={`/producto/${id}`}>
         <img src={imagen} alt={nombre} loading="lazy" />
       </Link>
@@ -11,7 +10,6 @@ function Producto({ id, nombre, precio, imagen, oferta }) {
       <div className="producto-info">
         {oferta && <span className="etiqueta-oferta">Oferta</span>}
 
-        {/* Nombre que lleva al detalle */}
         <Link
           to={`/producto/${id}`}
           style={{

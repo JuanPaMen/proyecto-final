@@ -39,7 +39,6 @@ function App() {
 
       <Footer />
 
-      {/* Asistente con IA: aparece en toda la tienda (no en el panel admin) */}
       <ChatBot />
     </>
   );

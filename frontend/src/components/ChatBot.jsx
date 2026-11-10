@@ -8,7 +8,6 @@ const SALUDO = {
     "¡Hola! Soy el asistente de It's Peak. Te ayudo a elegir prendas, tallas y precios. ¿Qué buscas hoy?",
 };
 
-// Preguntas rápidas para que el cliente no tenga que escribir
 const SUGERENCIAS = ["¿Qué jeans tienen?", "¿Hay ofertas?", "Busco una gorra"];
 
 function ChatBot() {
@@ -19,7 +18,6 @@ function ChatBot() {
   const [cargando, setCargando] = useState(false);
   const finRef = useRef(null);
 
-  // Mantener visible el último mensaje
   useEffect(() => {
     finRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [mensajes, cargando, abierto]);
@@ -108,7 +106,6 @@ function ChatBot() {
               </p>
             )}
 
-            {/* Sugerencias: solo mientras no se ha preguntado nada */}
             {mensajes.length === 1 && !cargando && (
               <div className="chat-sugerencias">
                 {SUGERENCIAS.map((s) => (

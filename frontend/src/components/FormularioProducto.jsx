@@ -18,7 +18,6 @@ function FormularioProducto({ onCreado }) {
   const [mensaje, setMensaje] = useState("");
   const [guardando, setGuardando] = useState(false);
 
-  // Actualizar los campos del formulario
   const manejarCambio = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -28,7 +27,6 @@ function FormularioProducto({ onCreado }) {
     });
   };
 
-  // Guardar producto en MongoDB
   const guardarProducto = async (e) => {
     e.preventDefault();
     setMensaje("");
@@ -81,7 +79,6 @@ function FormularioProducto({ onCreado }) {
       setMensaje("¡Producto agregado correctamente!");
       setFormulario(formularioInicial);
 
-      // Actualizar la lista del panel
       onCreado(datos);
     } catch (error) {
       setMensaje(error.message);

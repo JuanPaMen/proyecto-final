@@ -8,7 +8,6 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-contenido">
-        {/* Información de la marca */}
         <div className="footer-columna">
           <h2 className="footer-logo">
             IT'S <span>PEAK</span>
@@ -20,7 +19,6 @@ function Footer() {
           </p>
         </div>
 
-        {/* Navegación */}
         <div className="footer-columna">
           <h3>Explora</h3>
 
@@ -34,7 +32,6 @@ function Footer() {
           </nav>
         </div>
 
-        {/* Contacto y redes */}
         <div className="footer-columna">
           <h3>Conecta con nosotros</h3>
 

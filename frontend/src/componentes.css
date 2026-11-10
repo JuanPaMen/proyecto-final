@@ -75,7 +75,6 @@
   cursor: wait;
 }
 
-/* Botón-enlace dentro de la tarjeta de producto */
 .btn-enlace {
   display: block;
   text-align: center;
@@ -93,7 +92,6 @@
   margin-bottom: 6px;
 }
 
-/* Las tarjetas de producto aparecen suavemente */
 .contenedor-productos .producto {
   animation: aparecer 0.45s ease both;
 }
@@ -469,7 +467,6 @@
   box-shadow: 0 8px 30px rgba(17, 17, 17, 0.07);
 }
 
-/* Encabezado del formulario */
 .formulario-producto-titulo {
   display: flex;
   align-items: center;
@@ -506,7 +503,6 @@
   line-height: 1.5;
 }
 
-/* Etiquetas de los campos */
 .formulario-producto label {
   display: block;
   margin-bottom: 7px;
@@ -515,7 +511,6 @@
   font-weight: 700;
 }
 
-/* Campos de entrada */
 .formulario-producto input:not([type="checkbox"]),
 .formulario-producto select,
 .formulario-producto textarea {
@@ -533,7 +528,6 @@
     border-color 0.2s ease;
 }
 
-/* Al seleccionar un campo */
 .formulario-producto input:focus,
 .formulario-producto select:focus,
 .formulario-producto textarea:focus {
@@ -543,13 +537,11 @@
   box-shadow: 0 0 0 4px rgba(0, 108, 249, 0.08);
 }
 
-/* Área de descripción */
 .formulario-producto textarea {
   min-height: 115px;
   resize: vertical;
 }
 
-/* Casilla de oferta */
 .formulario-producto .casilla-oferta {
   display: flex;
   align-items: center;
@@ -567,7 +559,6 @@
   accent-color: #d90429;
 }
 
-/* Botón principal */
 .formulario-producto button[type="submit"] {
   width: 100%;
   min-height: 48px;
@@ -584,7 +575,6 @@
   box-shadow: 0 8px 20px rgba(0, 108, 249, 0.26);
 }
 
-/* Versión móvil */
 @media (max-width: 600px) {
   .formulario-producto-titulo {
     align-items: flex-start;
@@ -627,7 +617,6 @@
   box-shadow: 0 5px 18px rgba(0, 108, 249, 0.08);
 }
 
-/* Fotografía */
 .admin-producto-imagen {
   width: 110px;
   height: 140px;
@@ -636,7 +625,6 @@
   background: #eeeeee;
 }
 
-/* Información */
 .admin-producto-contenido {
   min-width: 0;
   display: flex;
@@ -689,7 +677,6 @@
   font-weight: 800;
 }
 
-/* Botones */
 .admin-producto-acciones {
   display: flex;
   flex-wrap: wrap;
@@ -706,7 +693,6 @@
   font-size: 13px;
 }
 
-/* Adaptación a celulares */
 @media (max-width: 600px) {
   .admin-producto-item {
     grid-template-columns: 80px minmax(0, 1fr);
@@ -744,7 +730,6 @@
   box-shadow: 0 8px 30px rgba(17, 17, 17, 0.06);
 }
 
-/* Título */
 .admin-mensajes > h3 {
   color: #111111;
   font-size: 22px;
@@ -752,7 +737,6 @@
   margin-bottom: 20px;
 }
 
-/* Tarjetas de mensajes */
 .mensaje-item {
   padding: 20px;
   margin-top: 14px;
@@ -761,27 +745,23 @@
   border-radius: 12px;
 }
 
-/* Mensajes sin leer */
 .mensaje-item.mensaje-nuevo {
   background: #f0f6ff;
   border-color: #a6cbff;
   border-left: 4px solid #006cf9;
 }
 
-/* Nombre del cliente */
 .mensaje-item header strong {
   color: #111111;
   font-size: 15px;
   font-weight: 800;
 }
 
-/* Fecha */
 .mensaje-item header small {
   color: #777777;
   font-size: 12px;
 }
 
-/* Correo electrónico */
 .mensaje-item a {
   color: #006cf9;
   font-size: 13px;
@@ -793,21 +773,18 @@
   text-decoration: underline;
 }
 
-/* Asunto */
 .mensaje-asunto {
   color: #333333;
   font-size: 14px;
   font-weight: 700;
 }
 
-/* Contenido del mensaje */
 .mensaje-texto {
   color: #555555;
   font-size: 14px;
   line-height: 1.6;
 }
 
-/* Botones de acciones */
 .mensaje-acciones {
   display: flex;
   flex-wrap: wrap;
@@ -824,7 +801,6 @@
   font-weight: 700;
 }
 
-/* Versión móvil */
 @media (max-width: 600px) {
   .admin-mensajes {
     padding: 16px;
