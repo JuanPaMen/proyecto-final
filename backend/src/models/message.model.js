@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// Mensajes que llegan desde el formulario de contacto
 const messageSchema = new mongoose.Schema(
   {
     nombre: { type: String, required: true, trim: true, maxlength: 80 },

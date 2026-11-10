@@ -28,7 +28,6 @@ const responderError = (error, res) => {
   });
 };
 
-// Público: conversación con el asistente de la tienda
 const responderChat = async (req, res) => {
   try {
     const { mensajes } = req.body || {};
@@ -64,7 +63,6 @@ const responderChat = async (req, res) => {
   }
 };
 
-// Admin: generar la descripción de un producto con IA
 const generarDescripcion = async (req, res) => {
   try {
     const { nombre, categoria, tallas } = req.body || {};

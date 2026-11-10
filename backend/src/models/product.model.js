@@ -1,4 +1,3 @@
-// src/models/product.model.js
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
@@ -17,7 +16,7 @@ const productSchema = new mongoose.Schema(
     oferta: { type: Boolean, default: false },
   },
   {
-    timestamps: true, // Agrega automáticamente campos de createdAt y updatedAt
+    timestamps: true,
   },
 );
 

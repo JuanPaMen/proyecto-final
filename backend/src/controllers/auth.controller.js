@@ -2,12 +2,10 @@ const Admin = require("../models/admin.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// Iniciar sesión del administrador
 const iniciarSesion = async (req, res) => {
   try {
     const { usuario, password } = req.body;
 
-    // Validar los datos
     if (
       typeof usuario !== "string" ||
       typeof password !== "string" ||
@@ -19,23 +17,22 @@ const iniciarSesion = async (req, res) => {
       });
     }
 
-    // Buscar administrador en MongoDB
     const admin = await Admin.findOne({
       usuario: usuario.trim().toLowerCase(),
     }).select("+passwordHash");
 
-    // Verificar usuario y contraseña
     const passwordCorrecta = admin
       ? await bcrypt.compare(password, admin.passwordHash)
       : false;
 
+    // Mismo mensaje si falla el usuario o la contraseña, para no revelar cuál existe
     if (!passwordCorrecta) {
       return res.status(401).json({
         mensaje: "Usuario o contraseña incorrectos.",
       });
     }
 
-    // Crear token de autenticación
+    // Token firmado con JWT_SECRET que vence en 2 horas
     const token = jwt.sign(
       {
         id: admin._id.toString(),

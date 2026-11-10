@@ -1,5 +1,6 @@
-// Servicio de IA: arma las instrucciones con la información REAL de la tienda
-// catálogo desde MongoDB + datos del negocio y llama al proveedor elegido.
+// Servicio de IA: arma las instrucciones con el catálogo de MongoDB y los datos
+// del negocio, y llama al proveedor elegido (Gemini o Anthropic).
+// La API key vive solo en el backend (.env), el navegador nunca la ve.
 const Product = require("../models/product.model");
 const negocio = require("../config/negocio");
 
@@ -14,7 +15,7 @@ const describirDatosNegocio = () =>
     .map(([clave, valor]) => `- ${clave}: ${valor || "No disponible"}`)
     .join("\n");
 
-// Instrucciones para el chatbot de atención al cliente
+// Se arma en cada consulta para que el bot siempre vea el catálogo actualizado
 const instruccionesChat = async () => {
   const productos = await Product.find().lean();
 
@@ -52,17 +53,14 @@ CATÁLOGO ACTUAL:
 ${catalogo}`;
 };
 
-// Instrucciones para generar la descripción de un producto (uso del admin)
 const instruccionesDescripcion = () =>
   `Eres el redactor de ${negocio.nombre}, una tienda de ropa.
 TONO DE MARCA: ${negocio.tono}
 Escribe una descripción de producto de 2 a 3 frases, lista para publicar.
 Reglas: texto plano (sin comillas, sin markdown, sin emojis); usa solo los datos que te den, sin inventar materiales, medidas ni cualidades que no aparezcan; no menciones el precio.`;
 
-// ---- Proveedores ----
 const esperar = (ms) => new Promise((resolver) => setTimeout(resolver, ms));
 
-// Un solo intento contra un modelo de Gemini
 const pedirAGemini = async (modelo, { instrucciones, mensajes, maxTokens }) => {
   let respuesta;
 

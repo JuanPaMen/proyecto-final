@@ -7,7 +7,7 @@ const protegerAdmin = require("../middlewares/auth.middleware");
 
 const router = express.Router();
 
-// Limitar los intentos de inicio de sesión
+// Máximo 5 intentos de login cada 15 minutos por IP, para frenar la fuerza bruta
 const limitarIntentos = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 5,
@@ -18,10 +18,8 @@ const limitarIntentos = rateLimit({
   },
 });
 
-// Ruta para iniciar sesión
 router.post("/login", limitarIntentos, iniciarSesion);
 
-// Verificar la sesión del administrador
 router.get("/me", protegerAdmin, (req, res) => {
   res.json({
     usuario: req.admin.usuario,

@@ -43,7 +43,6 @@ app.use(
 // Limitamos el tamaño del cuerpo para evitar envíos gigantes
 app.use(express.json({ limit: "20kb" }));
 
-// Ruta principal (también sirve para comprobar que el servidor despertó)
 app.get("/", (req, res) => {
   res.send("Backend de It's Peak funcionando");
 });
