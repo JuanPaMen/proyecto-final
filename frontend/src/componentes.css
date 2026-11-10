@@ -818,3 +818,27 @@
     padding: 9px 12px;
   }
 }
+
+/* ===== EDICIÓN DENTRO DE LA TARJETA ===== */
+
+.admin-producto-editor {
+  grid-column: 1 / -1;
+  margin-top: 10px;
+  border-top: 1px solid #e5eaf0;
+  padding-top: 20px;
+}
+
+.admin-producto-editor > form {
+  margin-bottom: 0 !important;
+  padding: 20px !important;
+  background: #ffffff;
+  border: 1px solid #e5eaf0;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+@media (max-width: 600px) {
+  .admin-producto-editor > form {
+    padding: 14px !important;
+  }
+}

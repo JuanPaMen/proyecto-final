@@ -35,7 +35,7 @@ const getProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const { id, nombre, precio, categoria, imagen, descripcion, tallas, oferta } =
+    const { nombre, precio, categoria, imagen, descripcion, tallas, oferta } =
       req.body;
 
     const precioLimpio = limpiarPrecio(precio);
@@ -45,7 +45,6 @@ const createProduct = async (req, res) => {
     }
 
     const nuevoProducto = new Product({
-      id,
       nombre,
       precio: precioLimpio,
       categoria,

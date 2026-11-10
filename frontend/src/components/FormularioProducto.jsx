@@ -3,7 +3,6 @@ import { API_URL } from "../config.js";
 import BotonDescripcionIA from "./BotonDescripcionIA.jsx";
 
 const formularioInicial = {
-  id: "",
   nombre: "",
   precio: "",
   categoria: "camisetas",
@@ -35,7 +34,6 @@ function FormularioProducto({ onCreado }) {
     const token = sessionStorage.getItem("adminToken");
 
     const nuevoProducto = {
-      id: Number(formulario.id),
       nombre: formulario.nombre.trim(),
       precio: formulario.precio,
       categoria: formulario.categoria,
@@ -119,19 +117,6 @@ function FormularioProducto({ onCreado }) {
           gap: "15px",
         }}
       >
-        <div>
-          <label>ID numérico</label>
-          <input
-            type="number"
-            name="id"
-            min="1"
-            required
-            value={formulario.id}
-            onChange={manejarCambio}
-            placeholder="Ej: 6"
-          />
-        </div>
-
         <div>
           <label>Nombre</label>
           <input
