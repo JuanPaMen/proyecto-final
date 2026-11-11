@@ -70,6 +70,7 @@ function Productos({ categoria }) {
             precio={Number(String(producto.precio).replace(/\D/g, ""))}
             imagen={resolverImagen(producto.imagen)}
             oferta={producto.oferta}
+            descuentoPorcentaje={producto.descuentoPorcentaje ?? 0}
           />
         ))}
       </div>

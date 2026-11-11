@@ -13,6 +13,13 @@ const productSchema = new mongoose.Schema(
 
     // Marca el producto como oferta (lo usa la sección "Ofertas" de la tienda)
     oferta: { type: Boolean, default: false },
+
+    descuentoPorcentaje: {
+      type: Number,
+      min: 0,
+      max: 100,
+      default: 0,
+    },
   },
   {
     timestamps: true,

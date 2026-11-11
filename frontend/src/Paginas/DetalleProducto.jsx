@@ -106,6 +106,14 @@ function DetalleProducto() {
   const imagen = resolverImagen(producto.imagen);
   const precio = obtenerPrecio(producto.precio);
 
+  const descuento = Number(producto.descuentoPorcentaje) || 0;
+
+  const tieneDescuento = producto.oferta && descuento > 0;
+
+  const precioFinal = tieneDescuento
+    ? Math.round(precio * (1 - descuento / 100))
+    : precio;
+
   const numeroWhatsApp = import.meta.env.VITE_WHATSAPP || "";
 
   const agregarAlCarrito = () => {
@@ -126,7 +134,7 @@ function DetalleProducto() {
       carrito.push({
         id: producto._id,
         nombre: producto.nombre,
-        precio,
+        precio: precioFinal,
         imagen,
         talla: tallaSeleccionada,
         cantidad: 1,
@@ -205,9 +213,46 @@ function DetalleProducto() {
         <div>
           <h2>{producto.nombre}</h2>
 
-          <h3 style={{ marginTop: "10px" }}>
-            ${precio.toLocaleString("es-CO")}
-          </h3>
+          <div style={{ marginTop: "12px" }}>
+            {tieneDescuento && (
+              <>
+                <span
+                  style={{
+                    display: "inline-block",
+                    backgroundColor: "#d90429",
+                    color: "white",
+                    padding: "5px 10px",
+                    borderRadius: "6px",
+                    fontSize: "13px",
+                    fontWeight: "800",
+                    marginBottom: "10px",
+                  }}
+                >
+                  -{descuento}% DESCUENTO
+                </span>
+
+                <p
+                  style={{
+                    color: "#888888",
+                    fontSize: "16px",
+                    marginBottom: "5px",
+                  }}
+                >
+                  Antes: <del>${precio.toLocaleString("es-CO")}</del>
+                </p>
+              </>
+            )}
+
+            <h3
+              style={{
+                color: tieneDescuento ? "#d90429" : "#006cf9",
+                fontSize: "28px",
+                fontWeight: "900",
+              }}
+            >
+              ${precioFinal.toLocaleString("es-CO")}
+            </h3>
+          </div>
 
           <p style={{ marginTop: "12px" }}>Categoría: {producto.categoria}</p>
 
@@ -349,6 +394,18 @@ function DetalleProducto() {
 
               const precioRecomendado = obtenerPrecio(item.precio);
 
+              const descuentoRecomendado = item.oferta
+                ? Number(item.descuentoPorcentaje) || 0
+                : 0;
+
+              const tieneDescuentoRecomendado = descuentoRecomendado > 0;
+
+              const precioFinalRecomendado = tieneDescuentoRecomendado
+                ? Math.round(
+                    precioRecomendado * (1 - descuentoRecomendado / 100),
+                  )
+                : precioRecomendado;
+
               return (
                 <Link
                   key={item._id}
@@ -362,10 +419,36 @@ function DetalleProducto() {
                   <img src={imagenRecomendada} alt={item.nombre} />
 
                   <div className="producto-info">
+                    {item.oferta && (
+                      <span className="etiqueta-oferta">
+                        {tieneDescuentoRecomendado
+                          ? `-${descuentoRecomendado}%`
+                          : "Oferta"}
+                      </span>
+                    )}
+
                     <h3>{item.nombre}</h3>
 
-                    <p className="precio">
-                      ${precioRecomendado.toLocaleString("es-CO")}
+                    {tieneDescuentoRecomendado && (
+                      <del
+                        style={{
+                          color: "#888888",
+                          fontSize: "14px",
+                        }}
+                      >
+                        ${precioRecomendado.toLocaleString("es-CO")}
+                      </del>
+                    )}
+
+                    <p
+                      className="precio"
+                      style={{
+                        color: tieneDescuentoRecomendado
+                          ? "#d90429"
+                          : "#111111",
+                      }}
+                    >
+                      ${precioFinalRecomendado.toLocaleString("es-CO")}
                     </p>
                   </div>
                 </Link>

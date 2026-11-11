@@ -35,8 +35,16 @@ const getProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const { nombre, precio, categoria, imagen, descripcion, tallas, oferta } =
-      req.body;
+    const {
+      nombre,
+      precio,
+      categoria,
+      imagen,
+      descripcion,
+      tallas,
+      oferta,
+      descuentoPorcentaje,
+    } = req.body;
 
     const precioLimpio = limpiarPrecio(precio);
 
@@ -52,6 +60,7 @@ const createProduct = async (req, res) => {
       descripcion,
       tallas,
       oferta: Boolean(oferta),
+      descuentoPorcentaje: descuentoPorcentaje ?? 0,
     });
 
     const productoGuardado = await nuevoProducto.save();
@@ -76,6 +85,7 @@ const updateProduct = async (req, res) => {
       "descripcion",
       "tallas",
       "oferta",
+      "descuentoPorcentaje",
     ];
 
     const cambios = {};

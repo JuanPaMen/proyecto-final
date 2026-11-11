@@ -11,6 +11,7 @@ function EditarProducto({ producto, onGuardado, onCancelar }) {
     descripcion: producto.descripcion || "",
     tallas: producto.tallas?.join(", ") || "",
     oferta: Boolean(producto.oferta),
+    descuentoPorcentaje: producto.descuentoPorcentaje ?? 0,
   });
 
   const [guardando, setGuardando] = useState(false);
@@ -45,6 +46,9 @@ function EditarProducto({ producto, onGuardado, onCancelar }) {
       imagen: formulario.imagen.trim(),
       descripcion: formulario.descripcion.trim(),
       oferta: formulario.oferta,
+      descuentoPorcentaje: formulario.oferta
+        ? Number(formulario.descuentoPorcentaje)
+        : 0,
       tallas: [
         ...new Set(
           formulario.tallas
@@ -208,6 +212,35 @@ function EditarProducto({ producto, onGuardado, onCancelar }) {
         />
         Producto en oferta (aparece en la sección Ofertas)
       </label>
+
+      {formulario.oferta && (
+        <div style={{ marginTop: "15px" }}>
+          <label htmlFor="editarDescuento">Porcentaje de descuento (%)</label>
+
+          <input
+            id="editarDescuento"
+            type="number"
+            name="descuentoPorcentaje"
+            min="0"
+            max="100"
+            step="1"
+            value={formulario.descuentoPorcentaje}
+            onChange={manejarCambio}
+            style={estiloCampo}
+            required
+          />
+
+          <small
+            style={{
+              display: "block",
+              marginTop: "6px",
+              color: "#777777",
+            }}
+          >
+            El descuento se calculará sobre el precio original.
+          </small>
+        </div>
+      )}
 
       {error && (
         <p
