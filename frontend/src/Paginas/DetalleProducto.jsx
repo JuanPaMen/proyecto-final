@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router";
 import { API_URL } from "../config.js";
 import { resolverImagen } from "../utils/imagenes.js";
 
-// Convertir el precio a número
+// El precio puede venir como "$65.000" o "65000"; se deja solo el número
 const obtenerPrecio = (precio) => {
   return Number(String(precio).replace(/\D/g, ""));
 };
@@ -12,13 +12,11 @@ const obtenerPrecio = (precio) => {
 function DetalleProducto() {
   const { id } = useParams();
 
-  // Estados del componente
   const [producto, setProducto] = useState(null);
   const [error, setError] = useState("");
   const [tallaSeleccionada, setTallaSeleccionada] = useState("");
   const [recomendados, setRecomendados] = useState([]);
 
-  // 1. Obtener producto individual desde MongoDB
   useEffect(() => {
     let activo = true;
 
@@ -28,9 +26,7 @@ function DetalleProducto() {
         setProducto(null);
         setTallaSeleccionada("");
 
-        const respuesta = await fetch(
-          `${API_URL}/api/productos/${id}`,
-        );
+        const respuesta = await fetch(`${API_URL}/api/productos/${id}`);
 
         if (!respuesta.ok) {
           throw new Error("Producto no encontrado");
@@ -57,7 +53,6 @@ function DetalleProducto() {
     };
   }, [id]);
 
-  // 2. Obtener productos recomendados
   useEffect(() => {
     if (!producto) return;
 
@@ -73,7 +68,6 @@ function DetalleProducto() {
 
         const datos = await respuesta.json();
 
-        // Excluir el producto actual
         const otros = datos.filter((item) => item._id !== producto._id);
 
         // Primero, productos de la misma categoría
@@ -105,19 +99,15 @@ function DetalleProducto() {
     };
   }, [producto]);
 
-  // Mensajes mientras cargamos
   if (error) return <p>{error}</p>;
 
   if (!producto) return <p>Cargando producto...</p>;
 
-  // Información del producto
   const imagen = resolverImagen(producto.imagen);
   const precio = obtenerPrecio(producto.precio);
 
-  // Número de WhatsApp de la tienda
   const numeroWhatsApp = import.meta.env.VITE_WHATSAPP || "";
 
-  // 3. Agregar al carrito
   const agregarAlCarrito = () => {
     if (!tallaSeleccionada) {
       alert("Primero selecciona una talla.");
@@ -145,13 +135,12 @@ function DetalleProducto() {
 
     localStorage.setItem("carrito", JSON.stringify(carrito));
 
-    // Actualizar contador del encabezado
+    // Avisa al Header para que actualice el contador del carrito
     window.dispatchEvent(new Event("carritoActualizado"));
 
     alert("¡Producto agregado al carrito!");
   };
 
-  // 4. Consultar por WhatsApp
   const consultarWhatsApp = () => {
     if (!numeroWhatsApp) {
       alert("Falta configurar el WhatsApp de la tienda.");
@@ -165,7 +154,6 @@ function DetalleProducto() {
     window.open(enlace, "_blank", "noopener,noreferrer");
   };
 
-  // 5. Compartir producto
   const compartirProducto = async () => {
     const enlace = window.location.href;
 
@@ -188,13 +176,13 @@ function DetalleProducto() {
 
   return (
     <section
+      className="detalle-producto"
       style={{
         width: "90%",
         maxWidth: "950px",
         margin: "40px auto",
       }}
     >
-      {/* FICHA PRINCIPAL DEL PRODUCTO */}
       <div
         style={{
           display: "grid",
@@ -204,7 +192,6 @@ function DetalleProducto() {
           alignItems: "start",
         }}
       >
-        {/* Imagen del producto */}
         <img
           src={imagen}
           alt={producto.nombre}
@@ -215,7 +202,6 @@ function DetalleProducto() {
           }}
         />
 
-        {/* Información del producto */}
         <div>
           <h2>{producto.nombre}</h2>
 
@@ -225,12 +211,10 @@ function DetalleProducto() {
 
           <p style={{ marginTop: "12px" }}>Categoría: {producto.categoria}</p>
 
-          {/* Descripción */}
           <p style={{ marginTop: "15px" }}>
             {producto.descripcion || "Descripción próximamente."}
           </p>
 
-          {/* Selector de tallas */}
           <div style={{ marginTop: "20px" }}>
             <h4>Selecciona tu talla</h4>
 
@@ -276,7 +260,6 @@ function DetalleProducto() {
             )}
           </div>
 
-          {/* BOTONES DEL PRODUCTO */}
           <div
             style={{
               display: "flex",
@@ -285,31 +268,35 @@ function DetalleProducto() {
               marginTop: "18px",
             }}
           >
-            {/* Agregar al carrito */}
-            <button className="btn-carrito" onClick={agregarAlCarrito}>
-              Agregar al carrito
+            <button
+              className="btn-carrito btn-accion-icono"
+              onClick={agregarAlCarrito}
+            >
+              <i className="bi bi-cart3" aria-hidden="true"></i>
+              <span>Agregar al carrito</span>
             </button>
 
-            {/* Consultar por WhatsApp */}
             <button
               onClick={consultarWhatsApp}
+              className="btn-accion-icono"
               style={{
                 width: "100%",
                 padding: "12px",
-                border: "1px solid #006cf9",
+                border: "1px solid #25D366",
                 borderRadius: "10px",
-                backgroundColor: "white",
-                color: "#006cf9",
-                fontWeight: "600",
+                backgroundColor: "#25D366",
+                color: "#ffffff",
+                fontWeight: "700",
                 cursor: "pointer",
               }}
             >
-              Consultar por WhatsApp
+              <i className="bi bi-whatsapp" aria-hidden="true"></i>
+              <span>Consultar por WhatsApp</span>
             </button>
 
-            {/* Compartir producto */}
             <button
               onClick={compartirProducto}
+              className="btn-accion-icono"
               style={{
                 width: "100%",
                 padding: "12px",
@@ -321,13 +308,37 @@ function DetalleProducto() {
                 cursor: "pointer",
               }}
             >
-              Compartir producto
+              <i className="bi bi-share" aria-hidden="true"></i>
+              <span>Compartir producto</span>
             </button>
+          </div>
+
+          <div className="detalle-metodos-pago">
+            <h4>
+              <i className="bi bi-shield-check"></i>
+              Medios de pago
+            </h4>
+
+            <div className="metodos-pago-lista">
+              <span>
+                <i className="bi bi-phone"></i>
+                Nequi
+              </span>
+
+              <span>
+                <i className="bi bi-bank"></i>
+                Transferencia
+              </span>
+
+              <span>
+                <i className="bi bi-cash-coin"></i>
+                Efectivo
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* PRODUCTOS RECOMENDADOS */}
       {recomendados.length > 0 && (
         <div style={{ marginTop: "45px" }}>
           <h2>También te puede gustar</h2>

@@ -3,7 +3,6 @@ const Message = require("../models/message.model");
 
 const EMAIL_VALIDO = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Público: guardar un mensaje del formulario de contacto
 const crearMensaje = async (req, res) => {
   try {
     const { nombre, email, asunto, mensaje, sitioWeb } = req.body || {};
@@ -43,7 +42,6 @@ const crearMensaje = async (req, res) => {
   }
 };
 
-// Admin: listar mensajes (los más nuevos primero)
 const listarMensajes = async (req, res) => {
   try {
     const mensajes = await Message.find().sort({ createdAt: -1 });
@@ -53,7 +51,6 @@ const listarMensajes = async (req, res) => {
   }
 };
 
-// Admin: marcar un mensaje como leído
 const marcarLeido = async (req, res) => {
   try {
     if (!mongoose.isValidObjectId(req.params.id)) {
@@ -76,7 +73,6 @@ const marcarLeido = async (req, res) => {
   }
 };
 
-// Admin: eliminar un mensaje
 const eliminarMensaje = async (req, res) => {
   try {
     if (!mongoose.isValidObjectId(req.params.id)) {

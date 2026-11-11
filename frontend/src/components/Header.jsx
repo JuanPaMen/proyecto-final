@@ -20,6 +20,8 @@ function Header() {
 
     actualizarCarrito();
 
+    // "carritoActualizado" es un evento propio que se dispara al guardar el carrito;
+    // "storage" cubre los cambios hechos desde otra pestaña
     window.addEventListener("carritoActualizado", actualizarCarrito);
     window.addEventListener("storage", actualizarCarrito);
 

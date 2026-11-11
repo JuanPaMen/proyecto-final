@@ -1,9 +1,7 @@
-// src/models/product.model.js
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
-    id: { type: Number, required: true, unique: true },
     nombre: { type: String, required: true },
     // Se guarda solo con dígitos (ej: "65000"); el frontend le da formato
     precio: { type: String, required: true },
@@ -17,7 +15,7 @@ const productSchema = new mongoose.Schema(
     oferta: { type: Boolean, default: false },
   },
   {
-    timestamps: true, // Agrega automáticamente campos de createdAt y updatedAt
+    timestamps: true,
   },
 );
 

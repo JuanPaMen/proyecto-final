@@ -2,25 +2,25 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 function Carrito() {
+  // El carrito vive en localStorage, por eso sigue ahí aunque se recargue la página
   const [carrito, setCarrito] = useState(() => {
     try {
       const datos = JSON.parse(localStorage.getItem("carrito") || "[]");
+
       return Array.isArray(datos) ? datos : [];
     } catch {
+      // Si el contenido guardado está dañado, se empieza con el carrito vacío
       return [];
     }
   });
 
-  // Guardar los cambios del carrito
   const guardarCarrito = (nuevoCarrito) => {
     setCarrito(nuevoCarrito);
-
     localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
 
     window.dispatchEvent(new Event("carritoActualizado"));
   };
 
-  // Aumentar o disminuir cantidades
   const cambiarCantidad = (id, talla, cambio) => {
     const actualizado = carrito.map((producto) => {
       if (producto.id === id && producto.talla === talla) {
@@ -36,106 +36,108 @@ function Carrito() {
     guardarCarrito(actualizado);
   };
 
-  // Eliminar un producto
   const eliminarProducto = (id, talla) => {
-    const actualizado = carrito.filter(
-      (producto) => !(producto.id === id && producto.talla === talla),
+    guardarCarrito(
+      carrito.filter(
+        (producto) => !(producto.id === id && producto.talla === talla),
+      ),
     );
-
-    guardarCarrito(actualizado);
   };
 
-  // Calcular el total
   const total = carrito.reduce(
-    (suma, producto) => suma + Number(producto.precio) * producto.cantidad,
+    (suma, producto) =>
+      suma + Number(producto.precio) * (producto.cantidad || 1),
     0,
   );
 
   return (
-    <section className="productos">
-      <h2>Mi carrito de compras</h2>
-      <p>Revisa los productos que seleccionaste.</p>
+    <section className="productos carrito-pagina">
+      <div className="carrito-encabezado">
+        <h2>Mi carrito</h2>
+        <p>Revisa las prendas que elegiste.</p>
+      </div>
 
       {carrito.length === 0 ? (
-        <div>
-          <p>Tu carrito está vacío.</p>
-          <Link to="/">Volver a la tienda</Link>
+        <div className="carrito-vacio">
+          <i className="bi bi-bag"></i>
+          <h3>Tu carrito está vacío</h3>
+          <p>Explora nuestra colección.</p>
+          <Link to="/" className="carrito-volver">
+            Ver productos
+          </Link>
         </div>
       ) : (
         <>
-          {carrito.map((producto) => (
-            <div
-              key={`${producto.id}-${producto.talla}`}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "20px",
-                background: "white",
-                padding: "15px",
-                marginBottom: "15px",
-                borderRadius: "12px",
-                flexWrap: "wrap",
-              }}
-            >
-              <img
-                src={producto.imagen}
-                alt={producto.nombre}
-                style={{
-                  width: "100px",
-                  borderRadius: "8px",
-                }}
-              />
+          <div className="carrito-lista">
+            {carrito.map((producto) => (
+              <article
+                key={`${producto.id}-${producto.talla}`}
+                className="carrito-item"
+              >
+                <img
+                  className="carrito-foto"
+                  src={producto.imagen}
+                  alt={producto.nombre}
+                />
 
-              <div style={{ flex: 1 }}>
-                <h3>{producto.nombre}</h3>
-                <p>Talla: {producto.talla}</p>
+                <div className="carrito-info">
+                  <div className="carrito-datos">
+                    <h3>{producto.nombre}</h3>
 
-                <p>${Number(producto.precio).toLocaleString("es-CO")}</p>
+                    <p className="carrito-talla">
+                      Talla: <strong>{producto.talla}</strong>
+                    </p>
 
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    marginTop: "10px",
-                  }}
-                >
-                  <button
-                    onClick={() =>
-                      cambiarCantidad(producto.id, producto.talla, -1)
-                    }
-                  >
-                    −
-                  </button>
+                    <p className="carrito-precio">
+                      ${Number(producto.precio).toLocaleString("es-CO")}
+                    </p>
+                  </div>
 
-                  <span>{producto.cantidad}</span>
+                  <div className="carrito-acciones">
+                    <div className="carrito-cantidad">
+                      <button
+                        type="button"
+                        aria-label="Disminuir cantidad"
+                        onClick={() =>
+                          cambiarCantidad(producto.id, producto.talla, -1)
+                        }
+                      >
+                        −
+                      </button>
 
-                  <button
-                    onClick={() =>
-                      cambiarCantidad(producto.id, producto.talla, 1)
-                    }
-                  >
-                    +
-                  </button>
+                      <span>{producto.cantidad || 1}</span>
+
+                      <button
+                        type="button"
+                        aria-label="Aumentar cantidad"
+                        onClick={() =>
+                          cambiarCantidad(producto.id, producto.talla, 1)
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="carrito-eliminar"
+                      onClick={() =>
+                        eliminarProducto(producto.id, producto.talla)
+                      }
+                    >
+                      <i className="bi bi-trash3"></i>
+                      Eliminar
+                    </button>
+                  </div>
                 </div>
+              </article>
+            ))}
+          </div>
 
-                <button
-                  onClick={() => eliminarProducto(producto.id, producto.talla)}
-                  style={{
-                    marginTop: "12px",
-                    color: "#d90429",
-                    cursor: "pointer",
-                  }}
-                >
-                  Eliminar producto
-                </button>
-              </div>
-            </div>
-          ))}
-
-          <h2 style={{ textAlign: "right" }}>
-            Total: ${total.toLocaleString("es-CO")}
-          </h2>
+          <div className="carrito-resumen">
+            <span>Total del carrito</span>
+            <strong>${total.toLocaleString("es-CO")}</strong>
+          </div>
         </>
       )}
     </section>

@@ -3,7 +3,6 @@ import { API_URL } from "../config.js";
 import BotonDescripcionIA from "./BotonDescripcionIA.jsx";
 
 const formularioInicial = {
-  id: "",
   nombre: "",
   precio: "",
   categoria: "camisetas",
@@ -18,7 +17,6 @@ function FormularioProducto({ onCreado }) {
   const [mensaje, setMensaje] = useState("");
   const [guardando, setGuardando] = useState(false);
 
-  // Actualizar los campos del formulario
   const manejarCambio = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -28,7 +26,6 @@ function FormularioProducto({ onCreado }) {
     });
   };
 
-  // Guardar producto en MongoDB
   const guardarProducto = async (e) => {
     e.preventDefault();
     setMensaje("");
@@ -37,7 +34,6 @@ function FormularioProducto({ onCreado }) {
     const token = sessionStorage.getItem("adminToken");
 
     const nuevoProducto = {
-      id: Number(formulario.id),
       nombre: formulario.nombre.trim(),
       precio: formulario.precio,
       categoria: formulario.categoria,
@@ -81,7 +77,6 @@ function FormularioProducto({ onCreado }) {
       setMensaje("¡Producto agregado correctamente!");
       setFormulario(formularioInicial);
 
-      // Actualizar la lista del panel
       onCreado(datos);
     } catch (error) {
       setMensaje(error.message);
@@ -92,6 +87,7 @@ function FormularioProducto({ onCreado }) {
 
   return (
     <form
+      className="formulario-producto"
       onSubmit={guardarProducto}
       style={{
         background: "white",
@@ -100,7 +96,18 @@ function FormularioProducto({ onCreado }) {
         marginBottom: "25px",
       }}
     >
-      <h3 style={{ marginBottom: "20px" }}>Agregar nuevo producto</h3>
+      <div className="formulario-producto-titulo">
+        <span className="formulario-producto-icono">
+          <i className="bi bi-bag-plus"></i>
+        </span>
+
+        <div>
+          <h3>Agregar nuevo producto</h3>
+          <p>
+            Completa la información de la prenda para publicarla en It's Peak.
+          </p>
+        </div>
+      </div>
 
       <div
         style={{
@@ -110,19 +117,6 @@ function FormularioProducto({ onCreado }) {
           gap: "15px",
         }}
       >
-        <div>
-          <label>ID numérico</label>
-          <input
-            type="number"
-            name="id"
-            min="1"
-            required
-            value={formulario.id}
-            onChange={manejarCambio}
-            placeholder="Ej: 6"
-          />
-        </div>
-
         <div>
           <label>Nombre</label>
           <input

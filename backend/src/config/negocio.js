@@ -1,4 +1,5 @@
 // Información del negocio que usa la IA para responder "como la tienda".
+// Un dato en null se envía como "No disponible" y el bot no lo inventa.
 module.exports = {
   nombre: "It's Peak",
   tono:

@@ -43,7 +43,9 @@
   font-weight: 600;
   cursor: pointer;
   color: var(--blanco);
-  transition: opacity 0.2s, transform 0.2s;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
 }
 
 .btn-azul {
@@ -73,7 +75,6 @@
   cursor: wait;
 }
 
-/* Botón-enlace dentro de la tarjeta de producto */
 .btn-enlace {
   display: block;
   text-align: center;
@@ -91,7 +92,6 @@
   margin-bottom: 6px;
 }
 
-/* Las tarjetas de producto aparecen suavemente */
 .contenedor-productos .producto {
   animation: aparecer 0.45s ease both;
 }
@@ -278,7 +278,9 @@
   font-size: 24px;
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s, background 0.2s;
+  transition:
+    transform 0.2s,
+    background 0.2s;
 }
 
 .chat-boton:hover {
@@ -455,5 +457,388 @@
   * {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* Admin, Poder agregar producto, mejorar su apariencia */
+
+.formulario-producto {
+  border: 1px solid #e5eaf0;
+  box-shadow: 0 8px 30px rgba(17, 17, 17, 0.07);
+}
+
+.formulario-producto-titulo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.formulario-producto-icono {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: #eaf3ff;
+  color: #006cf9;
+  font-size: 25px;
+}
+
+.formulario-producto-titulo h3 {
+  margin: 0;
+  color: #111111;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.formulario-producto-titulo p {
+  margin-top: 6px;
+  color: #777777;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.formulario-producto label {
+  display: block;
+  margin-bottom: 7px;
+  color: #303030;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.formulario-producto input:not([type="checkbox"]),
+.formulario-producto select,
+.formulario-producto textarea {
+  width: 100%;
+  min-height: 45px;
+  padding: 12px;
+  border: 1px solid #dce1e8;
+  border-radius: 9px;
+  background-color: #fafbfc;
+  color: #111111;
+  font-size: 14px;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.formulario-producto input:focus,
+.formulario-producto select:focus,
+.formulario-producto textarea:focus {
+  outline: 2px solid #006cf9;
+  outline-offset: 1px;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(0, 108, 249, 0.08);
+}
+
+.formulario-producto textarea {
+  min-height: 115px;
+  resize: vertical;
+}
+
+.formulario-producto .casilla-oferta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  background: #fff5f6;
+  border: 1px solid #f5d5da;
+  border-radius: 10px;
+  color: #111111;
+}
+
+.formulario-producto .casilla-oferta input {
+  width: 17px;
+  height: 17px;
+  accent-color: #d90429;
+}
+
+.formulario-producto button[type="submit"] {
+  width: 100%;
+  min-height: 48px;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  box-shadow: 0 5px 14px rgba(0, 108, 249, 0.18);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.formulario-producto button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 108, 249, 0.26);
+}
+
+@media (max-width: 600px) {
+  .formulario-producto-titulo {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .formulario-producto-icono {
+    width: 43px;
+    height: 43px;
+    font-size: 21px;
+  }
+
+  .formulario-producto-titulo h3 {
+    font-size: 19px;
+  }
+
+  .formulario-producto-titulo p {
+    font-size: 12px;
+  }
+}
+
+/* Productos Registrados en admin*/
+
+.admin-producto-item {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 20px;
+  padding: 18px;
+  margin-top: 15px;
+  background: #fafbfc;
+  border: 1px solid #e5eaf0;
+  border-radius: 12px;
+  transition:
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.admin-producto-item:hover {
+  border-color: #b9d7ff;
+  box-shadow: 0 5px 18px rgba(0, 108, 249, 0.08);
+}
+
+.admin-producto-imagen {
+  width: 110px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 9px;
+  background: #eeeeee;
+}
+
+.admin-producto-contenido {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-producto-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-producto-encabezado h4 {
+  color: #111111;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.admin-producto-precio {
+  color: #006cf9;
+  font-size: 19px;
+  white-space: nowrap;
+}
+
+.admin-producto-datos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+}
+
+.admin-producto-datos span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #666666;
+  font-size: 13px;
+}
+
+.admin-producto-oferta {
+  align-self: flex-start;
+  padding: 5px 10px;
+  background: #fff0f2;
+  color: #d90429;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.admin-producto-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.admin-producto-acciones button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 15px;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .admin-producto-item {
+    grid-template-columns: 80px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .admin-producto-imagen {
+    width: 80px;
+    height: 105px;
+  }
+
+  .admin-producto-encabezado h4 {
+    font-size: 14px;
+  }
+
+  .admin-producto-precio {
+    font-size: 17px;
+  }
+
+  .admin-producto-acciones button {
+    padding: 8px 11px;
+    font-size: 12px;
+  }
+}
+
+/* MENSAJES DE CONTACTO EN ADMIN*/
+
+.admin-mensajes {
+  margin-top: 30px;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e5eaf0;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(17, 17, 17, 0.06);
+}
+
+.admin-mensajes > h3 {
+  color: #111111;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.mensaje-item {
+  padding: 20px;
+  margin-top: 14px;
+  background: #fafbfc;
+  border: 1px solid #e5eaf0;
+  border-radius: 12px;
+}
+
+.mensaje-item.mensaje-nuevo {
+  background: #f0f6ff;
+  border-color: #a6cbff;
+  border-left: 4px solid #006cf9;
+}
+
+.mensaje-item header strong {
+  color: #111111;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.mensaje-item header small {
+  color: #777777;
+  font-size: 12px;
+}
+
+.mensaje-item a {
+  color: #006cf9;
+  font-size: 13px;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.mensaje-item a:hover {
+  text-decoration: underline;
+}
+
+.mensaje-asunto {
+  color: #333333;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mensaje-texto {
+  color: #555555;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.mensaje-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.mensaje-acciones button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 15px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .admin-mensajes {
+    padding: 16px;
+  }
+
+  .admin-mensajes > h3 {
+    font-size: 19px;
+  }
+
+  .mensaje-item {
+    padding: 14px;
+  }
+
+  .mensaje-acciones button {
+    padding: 9px 12px;
+  }
+}
+
+/* ===== EDICIÓN DENTRO DE LA TARJETA ===== */
+
+.admin-producto-editor {
+  grid-column: 1 / -1;
+  margin-top: 10px;
+  border-top: 1px solid #e5eaf0;
+  padding-top: 20px;
+}
+
+.admin-producto-editor > form {
+  margin-bottom: 0 !important;
+  padding: 20px !important;
+  background: #ffffff;
+  border: 1px solid #e5eaf0;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+@media (max-width: 600px) {
+  .admin-producto-editor > form {
+    padding: 14px !important;
   }
 }

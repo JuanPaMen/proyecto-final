@@ -1,5 +1,3 @@
-# Publica el frontend (carpeta frontend/) en GitHub Pages cada vez que se
-# actualiza la rama main. También se puede lanzar a mano desde la pestaña Actions.
 name: Desplegar frontend en GitHub Pages
 
 on:
@@ -36,7 +34,6 @@ jobs:
         run: npm run build
         working-directory: frontend
         env:
-          # Se configuran en GitHub: Settings > Secrets and variables > Actions > Variables
           VITE_API_URL: ${{ vars.VITE_API_URL }}
           VITE_WHATSAPP: ${{ vars.VITE_WHATSAPP }}
 

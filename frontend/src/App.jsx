@@ -9,6 +9,7 @@ import Carrito from "./Paginas/Carrito.jsx";
 import Contacto from "./Paginas/Contacto.jsx";
 import AdminLogin from "./Paginas/AdminLogin.jsx";
 import AdminPanel from "./Paginas/AdminPanel.jsx";
+import Footer from "./components/Footer.jsx";
 
 function App() {
   return (
@@ -36,7 +37,8 @@ function App() {
         </Routes>
       </main>
 
-      {/* Asistente con IA: aparece en toda la tienda (no en el panel admin) */}
+      <Footer />
+
       <ChatBot />
     </>
   );

@@ -16,7 +16,7 @@ proyecto-final/
 │       └── config.js      Dirección del backend (VITE_API_URL)
 ├── backend/               Node.js + Express + MongoDB (se publica en Render)
 │   ├── index.js           Arranque del servidor, CORS y rutas
-│   ├── scripts/           Tareas de una sola vez (crear admins, migrar precios)
+│   ├── scripts/           Tareas de una sola vez (crear administradores)
 │   └── src/
 │       ├── config/        Conexión a la base de datos y datos del negocio (para la IA)
 │       ├── models/        Esquemas de MongoDB

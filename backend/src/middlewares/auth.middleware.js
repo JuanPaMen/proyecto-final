@@ -3,7 +3,6 @@ const Admin = require("../models/admin.model");
 
 const protegerAdmin = async (req, res, next) => {
   try {
-    // Obtener el token enviado por el cliente
     const autorizacion = req.headers.authorization;
 
     if (!autorizacion?.startsWith("Bearer ")) {
@@ -14,12 +13,11 @@ const protegerAdmin = async (req, res, next) => {
 
     const token = autorizacion.split(" ")[1];
 
-    // Verificar que el token sea válido
     const datos = jwt.verify(token, process.env.JWT_SECRET, {
       algorithms: ["HS256"],
     });
 
-    // Comprobar que el administrador existe
+    // Un token válido no basta: el administrador pudo haber sido eliminado
     const admin = await Admin.findById(datos.id);
 
     if (!admin) {
@@ -30,7 +28,6 @@ const protegerAdmin = async (req, res, next) => {
 
     req.admin = admin;
 
-    // Permitir continuar
     next();
   } catch (error) {
     return res.status(401).json({

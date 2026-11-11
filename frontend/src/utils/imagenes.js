@@ -9,7 +9,6 @@ const porNombre = Object.fromEntries(
   Object.entries(locales).map(([ruta, url]) => [ruta.split("/").pop(), url]),
 );
 
-// Imagen gris que se muestra cuando no se encuentra la foto
 const SIN_IMAGEN =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(

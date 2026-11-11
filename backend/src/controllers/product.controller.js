@@ -4,7 +4,6 @@ const Product = require("../models/product.model");
 // Así todos los productos guardan el precio con el mismo formato.
 const limpiarPrecio = (precio) => String(precio ?? "").replace(/\D/g, "");
 
-// 1. Obtener todos los productos
 const getProducts = async (req, res) => {
   try {
     const productos = await Product.find();
@@ -16,7 +15,6 @@ const getProducts = async (req, res) => {
   }
 };
 
-// 2. Obtener un producto individual
 const getProductById = async (req, res) => {
   try {
     const producto = await Product.findById(req.params.id);
@@ -35,10 +33,9 @@ const getProductById = async (req, res) => {
   }
 };
 
-// 3. Agregar un producto
 const createProduct = async (req, res) => {
   try {
-    const { id, nombre, precio, categoria, imagen, descripcion, tallas, oferta } =
+    const { nombre, precio, categoria, imagen, descripcion, tallas, oferta } =
       req.body;
 
     const precioLimpio = limpiarPrecio(precio);
@@ -48,7 +45,6 @@ const createProduct = async (req, res) => {
     }
 
     const nuevoProducto = new Product({
-      id,
       nombre,
       precio: precioLimpio,
       categoria,
@@ -69,9 +65,9 @@ const createProduct = async (req, res) => {
   }
 };
 
-// 4. Editar un producto
 const updateProduct = async (req, res) => {
   try {
+    // Solo estos campos se pueden editar; el resto de lo que llegue se ignora
     const camposPermitidos = [
       "nombre",
       "precio",
@@ -132,7 +128,6 @@ const updateProduct = async (req, res) => {
   }
 };
 
-// 5. Eliminar un producto
 const deleteProduct = async (req, res) => {
   try {
     const productoEliminado = await Product.findByIdAndDelete(req.params.id);
@@ -154,7 +149,6 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-// Exportar las funciones
 module.exports = {
   getProducts,
   getProductById,

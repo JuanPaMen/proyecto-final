@@ -57,7 +57,6 @@ function Productos({ categoria }) {
         </p>
       )}
 
-      {/* Mensaje cuando no hay productos */}
       {!cargando && !error && productosFiltrados.length === 0 && (
         <p>No hay productos en esta categoría por ahora.</p>
       )}

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { API_URL } from "../config.js";
 
-// Lista de mensajes enviados desde el formulario de contacto (solo admin)
 function MensajesAdmin({ onSesionExpirada }) {
   const [mensajes, setMensajes] = useState([]);
   const [cargando, setCargando] = useState(true);

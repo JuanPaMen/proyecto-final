@@ -10,6 +10,8 @@ const adminSchema = new mongoose.Schema(
       trim: true,
     },
 
+    // select: false evita que el hash salga en las consultas normales;
+    // el login lo pide a propósito con select("+passwordHash")
     passwordHash: {
       type: String,
       required: true,

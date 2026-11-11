@@ -6,9 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "migrar": "node scripts/migrarPrecios.js",
-    "admins": "node scripts/crearAdmins.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "admins": "node scripts/crearAdmins.js"
   },
   "keywords": [],
   "author": "",

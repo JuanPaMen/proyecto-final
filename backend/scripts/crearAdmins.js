@@ -22,7 +22,6 @@ const rl = readline.createInterface({
   terminal: true,
 });
 
-// Preguntar datos desde la terminal
 const preguntar = (mensaje, secreto = false) => {
   return new Promise((resolve) => {
     if (secreto) {
@@ -39,7 +38,6 @@ const preguntar = (mensaje, secreto = false) => {
   });
 };
 
-// Crear los dos administradores
 const crearAdmins = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
@@ -77,6 +75,7 @@ const crearAdmins = async () => {
         continue;
       }
 
+      // Costo 12: más lento de calcular, más difícil de adivinar por fuerza bruta
       const passwordHash = await bcrypt.hash(password, 12);
 
       await Admin.create({
