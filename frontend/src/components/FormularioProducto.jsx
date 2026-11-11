@@ -10,6 +10,7 @@ const formularioInicial = {
   descripcion: "",
   tallas: "",
   oferta: false,
+  descuentoPorcentaje: "",
 };
 
 function FormularioProducto({ onCreado }) {
@@ -40,6 +41,9 @@ function FormularioProducto({ onCreado }) {
       imagen: formulario.imagen.trim(),
       descripcion: formulario.descripcion.trim(),
       oferta: formulario.oferta,
+      descuentoPorcentaje: formulario.oferta
+        ? Number(formulario.descuentoPorcentaje)
+        : 0,
       tallas: [
         ...new Set(
           formulario.tallas
@@ -218,6 +222,32 @@ function FormularioProducto({ onCreado }) {
         />
         Producto en oferta (aparece en la sección Ofertas)
       </label>
+
+      {formulario.oferta && (
+        <div style={{ marginTop: "15px" }}>
+          <label htmlFor="descuentoPorcentaje">
+            Porcentaje de descuento (%)
+          </label>
+
+          <input
+            id="descuentoPorcentaje"
+            type="number"
+            name="descuentoPorcentaje"
+            min="0"
+            max="100"
+            step="1"
+            value={formulario.descuentoPorcentaje}
+            onChange={manejarCambio}
+            placeholder="Ej: 20"
+            required
+          />
+
+          <small style={{ color: "#777", display: "block", marginTop: "6px" }}>
+            Ejemplo: si el producto vale $100.000 y colocas 20, el precio en
+            oferta será $80.000.
+          </small>
+        </div>
+      )}
 
       <button
         type="submit"

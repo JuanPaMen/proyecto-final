@@ -7,12 +7,13 @@ module.exports = {
     "(sin exagerar la jerga), sé amable y directo. Máximo un emoji por respuesta.",
 
   datos: {
-    queVendemos: "Ropa urbana: camisetas, polos, camisas, jeans, bermudas y gorras.",
+    queVendemos:
+      "Ropa urbana: camisetas, polos, camisas, jeans, bermudas y gorras.",
     ciudad: "Cartagena",
     envios: "Enviamos a todo el país por transportador, 2 a 5 días hábiles",
     metodosPago: "Transferencia, Nequi y contra entrega en Cartagena",
     horarioAtencion: "Lunes a sábado, de 9 a. m. a 6 p. m.",
     cambiosYDevoluciones: "Cambios dentro de los 8 días con etiqueta",
-    whatsapp: "+57 300 000 0000",
+    whatsapp: "+57 123 456 7890",
   },
 };
