@@ -7,6 +7,7 @@ const productRoutes = require("./src/routes/product.routes");
 const authRoutes = require("./src/routes/auth.routes");
 const contactRoutes = require("./src/routes/contact.routes");
 const chatRoutes = require("./src/routes/chat.routes");
+const orderRoutes = require("./src/routes/order.routes");
 
 // Si falta una variable obligatoria, avisamos de una vez (en vez de fallar a medias)
 ["MONGO_URI", "JWT_SECRET"].forEach((variable) => {
@@ -51,6 +52,7 @@ app.use("/api", productRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/contacto", contactRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/pedidos", orderRoutes);
 
 // Manejo de errores general (por ejemplo, un origen bloqueado por CORS)
 app.use((error, req, res, next) => {

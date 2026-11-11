@@ -138,6 +138,10 @@ function Carrito() {
             <span>Total del carrito</span>
             <strong>${total.toLocaleString("es-CO")}</strong>
           </div>
+
+          <Link to="/pago" className="btn-pagar">
+            Pagar ${total.toLocaleString("es-CO")}
+          </Link>
         </>
       )}
     </section>

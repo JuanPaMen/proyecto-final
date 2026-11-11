@@ -7,6 +7,7 @@ import Categoria from "./Paginas/Categoria.jsx";
 import DetalleProducto from "./Paginas/DetalleProducto.jsx";
 import Carrito from "./Paginas/Carrito.jsx";
 import Contacto from "./Paginas/Contacto.jsx";
+import Pago from "./Paginas/Pago.jsx";
 import AdminLogin from "./Paginas/AdminLogin.jsx";
 import AdminPanel from "./Paginas/AdminPanel.jsx";
 import Footer from "./components/Footer.jsx";
@@ -31,6 +32,7 @@ function App() {
           <Route path="/:categoria" element={<Categoria />} />
           <Route path="/producto/:id" element={<DetalleProducto />} />
           <Route path="/carrito" element={<Carrito />} />
+          <Route path="/pago" element={<Pago />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminPanel />} />
