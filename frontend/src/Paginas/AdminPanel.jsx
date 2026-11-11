@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router";
 import FormularioProducto from "../components/FormularioProducto.jsx";
 import EditarProducto from "../components/EditarProducto.jsx";
 import MensajesAdmin from "../components/MensajesAdmin.jsx";
+import PedidosAdmin from "../components/PedidosAdmin.jsx";
 import { API_URL } from "../config.js";
 import { resolverImagen } from "../utils/imagenes.js";
 
@@ -282,6 +283,8 @@ function AdminPanel() {
           </article>
         ))}
       </div>
+
+      <PedidosAdmin onSesionExpirada={cerrarSesion} />
 
       <MensajesAdmin onSesionExpirada={cerrarSesion} />
 
