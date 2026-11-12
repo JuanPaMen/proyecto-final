@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { desglosarIva, porcentajeIva, resumenCarrito, pesos } from "../utils/iva.js";
 
 function Carrito() {
   // El carrito vive en localStorage, por eso sigue ahí aunque se recargue la página
@@ -44,11 +45,7 @@ function Carrito() {
     );
   };
 
-  const total = carrito.reduce(
-    (suma, producto) =>
-      suma + Number(producto.precio) * (producto.cantidad || 1),
-    0,
-  );
+  const { subtotal, iva, total } = resumenCarrito(carrito);
 
   return (
     <section className="productos carrito-pagina">
@@ -69,78 +66,94 @@ function Carrito() {
       ) : (
         <>
           <div className="carrito-lista">
-            {carrito.map((producto) => (
-              <article
-                key={`${producto.id}-${producto.talla}`}
-                className="carrito-item"
-              >
-                <img
-                  className="carrito-foto"
-                  src={producto.imagen}
-                  alt={producto.nombre}
-                />
+            {carrito.map((producto) => {
+              const desglose = desglosarIva(Number(producto.precio));
 
-                <div className="carrito-info">
-                  <div className="carrito-datos">
-                    <h3>{producto.nombre}</h3>
+              return (
+                <article
+                  key={`${producto.id}-${producto.talla}`}
+                  className="carrito-item"
+                >
+                  <img
+                    className="carrito-foto"
+                    src={producto.imagen}
+                    alt={producto.nombre}
+                  />
 
-                    <p className="carrito-talla">
-                      Talla: <strong>{producto.talla}</strong>
-                    </p>
+                  <div className="carrito-info">
+                    <div className="carrito-datos">
+                      <h3>{producto.nombre}</h3>
 
-                    <p className="carrito-precio">
-                      ${Number(producto.precio).toLocaleString("es-CO")}
-                    </p>
-                  </div>
+                      <p className="carrito-talla">
+                        Talla: <strong>{producto.talla}</strong>
+                      </p>
 
-                  <div className="carrito-acciones">
-                    <div className="carrito-cantidad">
-                      <button
-                        type="button"
-                        aria-label="Disminuir cantidad"
-                        onClick={() =>
-                          cambiarCantidad(producto.id, producto.talla, -1)
-                        }
-                      >
-                        −
-                      </button>
+                      <p className="carrito-precio">{pesos(producto.precio)}</p>
 
-                      <span>{producto.cantidad || 1}</span>
-
-                      <button
-                        type="button"
-                        aria-label="Aumentar cantidad"
-                        onClick={() =>
-                          cambiarCantidad(producto.id, producto.talla, 1)
-                        }
-                      >
-                        +
-                      </button>
+                      <p className="carrito-iva">
+                        Base {pesos(desglose.base)} + IVA {pesos(desglose.iva)}
+                      </p>
                     </div>
 
-                    <button
-                      type="button"
-                      className="carrito-eliminar"
-                      onClick={() =>
-                        eliminarProducto(producto.id, producto.talla)
-                      }
-                    >
-                      <i className="bi bi-trash3"></i>
-                      Eliminar
-                    </button>
+                    <div className="carrito-acciones">
+                      <div className="carrito-cantidad">
+                        <button
+                          type="button"
+                          aria-label="Disminuir cantidad"
+                          onClick={() =>
+                            cambiarCantidad(producto.id, producto.talla, -1)
+                          }
+                        >
+                          −
+                        </button>
+
+                        <span>{producto.cantidad || 1}</span>
+
+                        <button
+                          type="button"
+                          aria-label="Aumentar cantidad"
+                          onClick={() =>
+                            cambiarCantidad(producto.id, producto.talla, 1)
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      <button
+                        type="button"
+                        className="carrito-eliminar"
+                        onClick={() =>
+                          eliminarProducto(producto.id, producto.talla)
+                        }
+                      >
+                        <i className="bi bi-trash3"></i>
+                        Eliminar
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
 
-          <div className="carrito-resumen">
-            <span>Total del carrito</span>
-            <strong>${total.toLocaleString("es-CO")}</strong>
+          <div className="carrito-resumen carrito-desglose">
+            <div>
+              <span>Precio base</span>
+              <span>{pesos(subtotal)}</span>
+            </div>
+            <div>
+              <span>IVA ({porcentajeIva}%)</span>
+              <span>{pesos(iva)}</span>
+            </div>
+            <div className="carrito-desglose-total">
+              <span>Total del carrito</span>
+              <strong>{pesos(total)}</strong>
+            </div>
           </div>
 
           <Link to="/pago" className="btn-pagar">
-            Pagar ${total.toLocaleString("es-CO")}
+            Pagar {pesos(total)}
           </Link>
         </>
       )}

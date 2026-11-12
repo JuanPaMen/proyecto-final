@@ -121,6 +121,12 @@ function PedidosAdmin({ onSesionExpirada }) {
             ))}
           </ul>
 
+          {p.iva != null && (
+            <p className="pedido-iva">
+              Precio base ${p.subtotal.toLocaleString("es-CO")} + IVA ${p.iva.toLocaleString("es-CO")}
+            </p>
+          )}
+
           <p className="pedido-total">
             Total: <strong>${p.total.toLocaleString("es-CO")}</strong> · {p.metodoPago} ·{" "}
             {ESTADOS[p.estado] || p.estado}

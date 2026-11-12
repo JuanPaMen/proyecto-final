@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Product = require("../models/product.model");
 const Order = require("../models/order.model");
 const { METODOS_PAGO, ESTADOS_PEDIDO } = require("../config/pagos");
+const { TASA_IVA, desglosarIva } = require("../utils/iva");
 
 const EMAIL_VALIDO = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -128,12 +129,22 @@ const crearPedido = async (req, res) => {
 
     const total = lineas.reduce((suma, l) => suma + l.precio * l.cantidad, 0);
 
+    // Se desglosa por unidad y se multiplica por la cantidad: base + IVA = total exacto
+    const subtotal = lineas.reduce(
+      (suma, l) => suma + desglosarIva(l.precio).base * l.cantidad,
+      0,
+    );
+    const iva = total - subtotal;
+
     // Pago simulado: la tienda es de práctica y no se cobra dinero. Con una pasarela
     // real (Wompi, Mercado Pago...) aquí se pediría el cobro y el pedido solo quedaría
     // "pagado" si la pasarela lo aprueba.
     const pedido = await Order.create({
       referencia: generarReferencia(),
       items: lineas,
+      subtotal,
+      iva,
+      tasaIva: TASA_IVA,
       total,
       cliente: datos,
       metodoPago,
@@ -142,6 +153,8 @@ const crearPedido = async (req, res) => {
 
     res.status(201).json({
       referencia: pedido.referencia,
+      subtotal: pedido.subtotal,
+      iva: pedido.iva,
       total: pedido.total,
       estado: pedido.estado,
     });

@@ -1009,3 +1009,47 @@
 .pedido-total {
   margin-top: 6px;
 }
+
+/* ===== IVA EN CARRITO Y PAGO ===== */
+
+.carrito-iva {
+  margin-top: 4px;
+  color: #777777;
+  font-size: 13px;
+}
+
+.carrito-resumen.carrito-desglose {
+  display: block;
+}
+
+.carrito-desglose > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 6px 0;
+  color: #444444;
+}
+
+.carrito-desglose .carrito-desglose-total {
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid #e5eaf0;
+  color: var(--negro);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.pago-fila {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  color: #444444;
+  font-size: 14px;
+}
+
+.pedido-iva {
+  margin-top: 4px;
+  color: #666666;
+  font-size: 14px;
+}
