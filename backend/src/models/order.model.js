@@ -21,6 +21,10 @@ const orderSchema = new mongoose.Schema(
   {
     referencia: { type: String, required: true, unique: true },
     items: { type: [itemSchema], required: true },
+    // Los precios incluyen IVA: subtotal (base) + iva = total
+    subtotal: { type: Number, min: 0 },
+    iva: { type: Number, min: 0 },
+    tasaIva: { type: Number, min: 0 },
     total: { type: Number, required: true, min: 1 },
     cliente: {
       nombre: { type: String, required: true, trim: true, maxlength: 80 },

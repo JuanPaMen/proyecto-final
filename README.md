@@ -83,5 +83,8 @@ El archivo `.env` nunca se sube a GitHub (está en `.gitignore`).
 - **HashRouter:** GitHub Pages no entiende las rutas de React; con `#` la página no da 404 al recargar.
 - **La IA pasa por el backend:** la API key nunca llega al navegador. El backend arma las
   instrucciones con el catálogo real de MongoDB y los datos de `backend/src/config/negocio.js`.
+- **IVA incluido en los precios:** los precios ya llevan IVA (19%, tarifa general en Colombia). El carrito
+  muestra precio base (precio ÷ 1,19), IVA y total. El cálculo vive en `backend/src/utils/iva.js` y se repite
+  en `frontend/src/utils/iva.js` solo para mostrarlo; al pagar, el servidor lo recalcula.
 - **Seguridad:** contraseñas con bcrypt, sesión con JWT de 2 horas, límites de intentos,
   CORS restringido y validación de datos en el servidor.

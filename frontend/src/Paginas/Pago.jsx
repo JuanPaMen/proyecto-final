@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { API_URL } from "../config.js";
+import { porcentajeIva, resumenCarrito, pesos } from "../utils/iva.js";
 
 const METODOS = [
   { valor: "tarjeta", nombre: "Tarjeta de crédito o débito", icono: "bi-credit-card" },
@@ -35,11 +36,7 @@ function Pago() {
   const [error, setError] = useState("");
   const [pedido, setPedido] = useState(null);
 
-  const total = carrito.reduce(
-    (suma, producto) =>
-      suma + Number(producto.precio) * (producto.cantidad || 1),
-    0,
-  );
+  const { subtotal, iva, total } = resumenCarrito(carrito);
 
   const manejarCambio = (e) => {
     const { name, value } = e.target;
@@ -121,7 +118,10 @@ function Pago() {
           Tu referencia es <strong>{pedido.referencia}</strong>
         </p>
         <p>
-          Total pagado: <strong>${Number(pedido.total).toLocaleString("es-CO")}</strong>
+          Precio base: {pesos(pedido.subtotal)} · IVA ({porcentajeIva}%): {pesos(pedido.iva)}
+        </p>
+        <p>
+          Total pagado: <strong>{pesos(pedido.total)}</strong>
         </p>
         <p className="pago-nota">
           Pago simulado: es una tienda de práctica y no se cobró ningún dinero.
@@ -256,7 +256,7 @@ function Pago() {
         )}
 
         <button type="submit" className="btn-azul pago-boton" disabled={pagando}>
-          {pagando ? "Procesando pago..." : `Pagar $${total.toLocaleString("es-CO")}`}
+          {pagando ? "Procesando pago..." : `Pagar ${pesos(total)}`}
         </button>
       </form>
 
@@ -271,15 +271,22 @@ function Pago() {
                 Talla {producto.talla} · {producto.cantidad || 1} und.
               </small>
             </div>
-            <span>
-              ${(Number(producto.precio) * (producto.cantidad || 1)).toLocaleString("es-CO")}
-            </span>
+            <span>{pesos(Number(producto.precio) * (producto.cantidad || 1))}</span>
           </div>
         ))}
 
+        <div className="pago-fila">
+          <span>Precio base</span>
+          <span>{pesos(subtotal)}</span>
+        </div>
+        <div className="pago-fila">
+          <span>IVA ({porcentajeIva}%)</span>
+          <span>{pesos(iva)}</span>
+        </div>
+
         <div className="pago-total">
           <span>Total</span>
-          <strong>${total.toLocaleString("es-CO")}</strong>
+          <strong>{pesos(total)}</strong>
         </div>
 
         <Link to="/carrito" className="enlace-centrado">
