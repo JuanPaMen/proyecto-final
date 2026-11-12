@@ -1053,3 +1053,20 @@
   color: #666666;
   font-size: 14px;
 }
+
+/* ===== BOTÓN ELIMINAR EN PEDIDOS ===== */
+
+.btn-borrar {
+  padding: 10px 16px;
+  background: var(--blanco);
+  color: var(--rojo);
+  border: 1px solid var(--rojo);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-borrar:hover {
+  background: #fde8ec;
+}

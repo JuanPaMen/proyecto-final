@@ -72,6 +72,34 @@ function PedidosAdmin({ onSesionExpirada }) {
     }
   };
 
+  const eliminar = async (pedido) => {
+    if (!window.confirm(`¿Eliminar el pedido ${pedido.referencia}? No se puede deshacer.`)) {
+      return;
+    }
+
+    setError("");
+
+    try {
+      const token = sessionStorage.getItem("adminToken");
+
+      const respuesta = await fetch(`${API_URL}/api/pedidos/${pedido._id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (respuesta.status === 401) {
+        onSesionExpirada();
+        return;
+      }
+
+      if (!respuesta.ok) throw new Error("No se pudo eliminar el pedido.");
+
+      setPedidos((anteriores) => anteriores.filter((p) => p._id !== pedido._id));
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+
   const porEnviar = pedidos.filter((p) => p.estado === "pagado").length;
 
   return (
@@ -143,6 +171,9 @@ function PedidosAdmin({ onSesionExpirada }) {
                 Cancelar
               </button>
             )}
+            <button type="button" className="btn-borrar" onClick={() => eliminar(p)}>
+              <i className="bi bi-trash3"></i> Eliminar
+            </button>
           </div>
         </article>
       ))}

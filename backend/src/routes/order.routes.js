@@ -5,6 +5,7 @@ const {
   crearPedido,
   listarPedidos,
   cambiarEstado,
+  eliminarPedido,
 } = require("../controllers/order.controller");
 
 const protegerAdmin = require("../middlewares/auth.middleware");
@@ -26,5 +27,6 @@ router.post("/", limitarPedidos, crearPedido);
 // Solo administradores
 router.get("/", protegerAdmin, listarPedidos);
 router.patch("/:id/estado", protegerAdmin, cambiarEstado);
+router.delete("/:id", protegerAdmin, eliminarPedido);
 
 module.exports = router;

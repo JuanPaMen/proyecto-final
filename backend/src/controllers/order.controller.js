@@ -201,4 +201,23 @@ const cambiarEstado = async (req, res) => {
   }
 };
 
-module.exports = { crearPedido, listarPedidos, cambiarEstado };
+// Admin: eliminar un pedido del historial
+const eliminarPedido = async (req, res) => {
+  try {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ mensaje: "ID no válido." });
+    }
+
+    const eliminado = await Order.findByIdAndDelete(req.params.id);
+
+    if (!eliminado) {
+      return res.status(404).json({ mensaje: "Pedido no encontrado." });
+    }
+
+    res.json({ mensaje: "Pedido eliminado." });
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error al eliminar el pedido." });
+  }
+};
+
+module.exports = { crearPedido, listarPedidos, cambiarEstado, eliminarPedido };

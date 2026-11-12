@@ -72,7 +72,7 @@ El archivo `.env` nunca se sube a GitHub (está en `.gitignore`).
 | `POST /api/contacto` | Público | Guarda un mensaje (máx. 5 / hora) |
 | `GET/PATCH/DELETE /api/contacto` | Admin | Ver, marcar como leído, eliminar mensajes |
 | `POST /api/pedidos` | Público | Crea un pedido y registra el pago simulado (máx. 10 / hora) |
-| `GET/PATCH /api/pedidos` | Admin | Ver pedidos y cambiar su estado |
+| `GET/PATCH/DELETE /api/pedidos` | Admin | Ver pedidos, cambiar su estado y eliminarlos |
 | `POST /api/chat` | Público | Conversación con el asistente de IA |
 | `POST /api/chat/descripcion` | Admin | Genera la descripción de un producto |
 
