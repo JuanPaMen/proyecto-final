@@ -1,6 +1,6 @@
 // Busca automáticamente todas las imágenes de src/assets/img, así no hay que
 // importar cada una a mano. Para agregar una nueva, solo guárdala en esa carpeta.
-const locales = import.meta.glob("../assets/img/*.{jpg,jpeg,png,webp}", {
+const locales = import.meta.glob("../assets/img/*.{jpg,jpeg,png,webp,avif}", {
   eager: true,
   import: "default",
 });
